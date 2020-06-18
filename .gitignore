@@ -1,0 +1,14 @@
+.idea/*
+.settings/*
+*/target/*
+*.log
+*.iml
+.classpath
+*.class
+.project
+.dubbo/
+src/test/*
+unpackage/*
+/src/main/resources/rebel-remote.xml
+/src/main/resources/rebel.xml
+.unpackage/*

@@ -1,0 +1,89 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+        {
+        	"path": "pages/member/center/center",
+        	"style": {
+        		"navigationBarTitleText": "会员中心"
+        	}
+        },
+        {
+        	"path": "pages/member/login/login",
+        	"style": {
+        		"navigationBarTitleText": "会员登录"
+        	}
+        },
+        {
+        	"path": "pages/member/ranking/ranking",
+        	"style": {
+        		"navigationBarTitleText": "排行榜"
+        	}
+        },
+        {
+        	"path": "pages/member/data/data",
+        	"style": {
+        		"navigationBarTitleText": "业绩数据"
+        	}
+        },
+        {
+        	"path": "pages/member/data/bank-card",
+        	"style": {
+        		"navigationBarTitleText": "发卡订单"
+        	}
+        },
+        {
+        	"path": "pages/member/data/promote-user",
+        	"style": {
+        		"navigationBarTitleText": "联合拉新"
+        	}
+        },
+        {
+        	"path": "pages/member/login/register",
+        	"style": {
+        		"navigationBarTitleText": "注册"
+        	}
+        }
+	    ,{
+            "path" : "pages/member/data/group-data",
+           "style": {
+           	"navigationBarTitleText": "团队业绩"
+           }
+        }
+        ,{
+            "path" : "pages/article/article",
+            "style": {
+            	"navigationBarTitleText": ""
+            }
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+    "tabBar": {
+    	"borderStyle": "black",
+    	"backgroundColor": "#fff",
+    	"color": "#8F8F94",
+    	"selectedColor": "#ce1a17",
+    	"list": [{
+    			"pagePath": "pages/index/index",
+    			"iconPath": "static/img/tabbar/home.png",
+    			"selectedIconPath": "static/img/tabbar/homeactive.png",
+    			"text": "首页"
+    		},
+    		{
+    			"pagePath": "pages/member/center/center",
+    			"iconPath": "static/img/tabbar/me.png",
+    			"selectedIconPath": "static/img/tabbar/meactive.png",
+    			"text": "我"
+    		}
+    	]
+    }
+}
