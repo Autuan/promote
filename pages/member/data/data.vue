@@ -1,6 +1,5 @@
 <template>
     <view>
-
         <!-- 发卡订单 -->
         <uni-card title="发卡订单" @tap="bankCardDetail">
             <view style="width: 100%; ">

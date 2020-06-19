@@ -29,16 +29,17 @@
         </view>
         <swiper @change="swiperChange" previous-margin="50px" next-margin="50px" class="swiper" :indicator-dots="false"
             :autoplay="false" :interval="3000" :duration="1000" :current="bigIdx">
-            <swiper-item>
+            <swiper-item @tap="toHistoryData">
                 <view class="big" :class="['swiper-item',]" style="height:150px;background:linear-gradient(94deg,rgba(150,147,168,1),rgba(150,147,164,1));
                     box-shadow:0px 3px 12px 0px rgba(195,164,110,0.23);">
                     <text class=" title cuIcon-sponsor " style="font-size: 100upx;"></text>
-                    <text class="margin-top text-white text-xl">历史推广费</text>
+                    <text class="margin-top text-white text-xl" 
+					>历史推广费</text>
                     <!-- <i-price class="" countSize="24" symbolSize="16" decimal="small" :value="8888" /> -->
                     <!-- <text class="sub_title">点击查看</text> -->
                 </view>
             </swiper-item>
-            <swiper-item>
+            <swiper-item @tap="toThisMoonData">
                 <view class="big" :class="['swiper-item',]" style="height:150px;background:linear-gradient(94deg,rgba(192,160,105,1),rgba(233,213,172,1));
                     box-shadow:0px 3px 12px 0px rgba(195,164,110,0.23);">
                     <text class=" title cuIcon-redpacket_fill line-yellow" style="font-size: 100upx;color:yellow;"></text>
@@ -183,7 +184,17 @@
                 uni.navigateTo({
                     url:'/pages/member/ranking/ranking'
                 })  
-            }
+            },
+			toHistoryData(){
+				uni.navigateTo({
+				    url:'/pages/member/data/history-data'
+				})  
+			},
+			toThisMoonData(){
+				uni.navigateTo({
+				    url:'/pages/member/data/this-moon'
+				})  
+			}
         }
     }
 </script>

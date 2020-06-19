@@ -4,18 +4,34 @@
 			<image class="logo" src="/static/logo.jpg" mode="widthFix"></image>
 		</view> -->
         <view class="content">
-            <view class="title-h">您好,欢迎使用,请登录</view>
-            <!-- <view class="introduce">欢迎使用</view> -->
-            <input class="margin-top" placeholder="请输入手机号码" v-model="submitData.mobile" />
-            <input class="margin-top" password placeholder="请输入登录密码" v-model="submitData.password" />
+            <view class="title-h">您好,{{member.name}}</view>
+            <view class="introduce">请修改您的登录密码</view>
+			<!-- <view class="cu-form-group"> -->
+			 	<!-- <view class="title">您好</view> -->
+			 	<!-- <view class="title">您好，{{member.name}} </view> -->
+			 	<!-- <input placeholder="请输入密码" name="input" v-model="submitData.password" password="true" ></input> -->
+			 <!-- </view> -->
+			 <!-- <view class=""> -->
+			  	<!-- <view class="title">您好</view> -->
+			  	<!-- <view class="title">请修改您的登录密码</view> -->
+			  	<!-- <input placeholder="请输入密码" name="input" v-model="submitData.password" password="true" ></input> -->
+			  <!-- </view> -->
+            <view class="cu-form-group">
+             	<view class="title">密码</view>
+             	<input placeholder="请输入密码" name="input" v-model="submitData.password" password="true" ></input>
+             </view>
+            <view class="cu-form-group">
+            	<view class="title">确认密码</view>
+            	<input placeholder="请再次输入密码" name="input" v-model="submitData.repeatPwd" password="true"></input>
+            </view>
         </view>
         <view class="foot-view">
             <view class="zaiui-btn-view">
-                <button class="zaiui-btn" @tap="login">登录</button>
+                <button class="zaiui-btn" @tap="login">确认修改</button>
             </view>
             <view class="font-tag-view">
                 <!-- <text class="font-tag">忘记密码?</text> -->
-                <text class="font-tag" @tap="toRegister">用户注册</text>
+                <!-- <text class="font-tag" @tap="toRegister">用户注册	</text> -->
             </view>
         </view>
     </view>
@@ -25,19 +41,22 @@
     export default {
         data() {
             return {
+				member:{},
                 submitData: {
-                    mobile: '',
+                    repeatPwd: '',
                     password: '',
                 }
             }
         },
-        onLoad() {},
+        onLoad() {
+			this.member = uni.getStorageSync('member');
+			
+		},
         methods: {
             checkParam() {
                 let tipObj = {
                     mobile: {
-                        name: '手机号码',
-                        type: 'phone',
+                        repeatPwd: '确认密码',
                     },
                     password: {
                         name: '密码',
@@ -52,7 +71,10 @@
                 if (!checkPass) {
                     return;
                 }
-
+				if(page.submitData.password !== page.submitData.repeatPwd ) {
+                    getApp().tip('两次密码不一致!')
+                    return
+                }
                 getApp().request({
                     url: '/front/salesman/login',
                     data: page.submitData,

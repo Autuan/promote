@@ -60,6 +60,24 @@
             	"navigationBarTitleText": ""
             }
         }
+        ,{
+            "path" : "pages/member/login/change-pwd",
+           "style": {
+           	"navigationBarTitleText": "修改初始密码"
+           }
+        }
+		,{
+		    "path" : "pages/member/data/this-moon",
+		   "style": {
+		   	"navigationBarTitleText": "本月推广费用"
+		   }
+		}
+        ,{
+            "path" : "pages/member/data/history-data",
+            "style": {
+            	"navigationBarTitleText": "历史推广费用"
+            }
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -74,14 +92,14 @@
     	"selectedColor": "#ce1a17",
     	"list": [{
     			"pagePath": "pages/index/index",
-    			"iconPath": "static/img/tabbar/home.png",
-    			"selectedIconPath": "static/img/tabbar/homeactive.png",
+    			"iconPath": "static/img/tab/home.png",
+    			"selectedIconPath": "static/img/tab/home_active.png",
     			"text": "首页"
     		},
     		{
     			"pagePath": "pages/member/center/center",
-    			"iconPath": "static/img/tabbar/me.png",
-    			"selectedIconPath": "static/img/tabbar/meactive.png",
+    			"iconPath": "static/img/tab/me.png",
+    			"selectedIconPath": "static/img/tab/me_active.png",
     			"text": "我"
     		}
     	]

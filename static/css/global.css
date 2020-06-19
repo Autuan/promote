@@ -4,3 +4,6 @@
 .fR{
     float: right;
 }
+.border-bottom-gray{
+	border-bottom: 1upx solid #C0C0C0;
+}
