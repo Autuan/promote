@@ -10,6 +10,103 @@
             console.log('App Hide')
         },
         methods:{
+            /**
+             * 弹框提示信息
+             * @param {Object} msg
+             */
+            tip(msg) {
+                uni.showToast({
+                    icon: 'none',
+                    title: msg,
+                    duration: 2000
+                });
+            },
+            checkParamNotNull(paramObj, tipObj) {
+                let flag = false;
+                return Object.keys(tipObj).every(function(key,index) {
+                    flag = paramObj[key] == undefined;
+                    if (flag) {
+                        getApp().tip(tipObj[key].name + '不能为空');
+                        return false;
+                    } 
+                    let type = tipObj[key].type || "string";
+                    let tip = tipObj[key].tip;
+                    let regType = "";
+                    if(getApp().regType.indexOf(type) > -1){
+                        regType = type;
+                        type = "string";
+                    }
+                    switch(type) {
+                        case 'string' : {
+                            flag = paramObj[key] == '';
+                            let val = paramObj[key];
+                            if(flag){
+                                getApp().tip(tip || tipObj[key].name + '不能为空');
+                                return false;
+                            }
+                            if(regType !== "") {
+                                let reg = getApp().reg[regType] ;
+                                if(!reg.test(val)){
+                                    getApp().tip(tip || '请输入正确的'+tipObj[key].name);
+                                    return false;
+                                }
+                            } else {
+                                let strLen = paramObj[key].length;
+                                let minLen = tipObj[key].minLen;
+                                if(undefined != minLen && !isNaN(minLen) ) {
+                                    if(minLen >= 0 && strLen < minLen) {
+                                        getApp().tip(tip || tipObj[key].name + '最小长度为' + minLen);
+                                        return false;
+                                    }
+                                }
+                                let maxLen = tipObj[key].maxLen;
+                                if(undefined != maxLen && !isNaN(maxLen) ) {
+                                    if(maxLen >= 0 && maxLen < strLen) {
+                                        getApp().tip(tip || tipObj[key].name + '长度必须在' + maxLen + '以内(不含)');
+                                        return false;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        case 'number' : {
+                            let val = paramObj[key];
+                            if(isNaN(val)){
+                                getApp().tip(tip || tipObj[key].name + '必须是数字');
+                                return false;
+                            }
+                            let min = tipObj[key].min;
+                            let max = tipObj[key].max;
+                            if(min != undefined && val < min){
+                                getApp().tip(tip || tipObj[key].name + '不能小于最低值:' + min);
+                                return false;
+                            }
+                            if(max != undefined && val >= max){
+                                getApp().tip(tip || tipObj[key].name + '不能大于等于最大值:' + max);
+                                return false;
+                            }
+                            break;
+                        }
+                        case 'address' : {
+                            flag = paramObj[key] == '';
+                            if(flag){
+                                getApp().tip(tip || '请选择' + tipObj[key].name );
+                                return false;
+                            }
+                            break;
+                        }
+                        case 'image' : {
+                            flag = paramObj[key] == '';
+                            if(flag){
+                                getApp().tip(tip || '请上传' + tipObj[key].name );
+                                return false;
+                            }
+                            break;
+                        }
+                    }
+                    return true;
+                });
+            },
             request(option){
                 let opt = option || {};
                 let currentPathArray = getCurrentPages();
