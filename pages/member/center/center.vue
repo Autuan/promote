@@ -14,7 +14,7 @@
                         <view class="content flex-sub">
                             <view class="text-grey">
                                 <text>张三</text>
-                                <view class="margin-left padding-xs">
+                                <view class="margin-left padding-xs">	
                                     <view class='cu-tag line-orange'>title</view>
                                 </view>
                             </view>

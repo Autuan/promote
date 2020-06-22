@@ -3,10 +3,10 @@
 
         <swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
             duration="500">
-            <swiper-item v-for="(item,index) in swiperList" :key="index" @tap="clickSwiper(item.id)">
-                <image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-                <video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover"
-                    v-if="item.type=='video'"></video>
+            <swiper-item v-for="(item,index) in articles" :key="index" @tap="toArticleDetail(item.id)">
+                <image :src="item.image" mode="aspectFill"></image>
+                <!-- <video :src="item.image" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover"
+                    v-if="item.type=='video'"></video> -->
             </swiper-item>
         </swiper>
 
@@ -20,12 +20,12 @@
 
         <swiper class="card-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
             duration="500" @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
-            <swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''"
-            @tap="previewImg(item.url)">
+            <swiper-item v-for="(item,index) in images" :key="index" :class="cardCur==index?'cur':''"
+            @tap="previewImg(item.image)">
                 <view class="swiper-item">
-                    <image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-                    <video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover"
-                        v-if="item.type=='video'"></video>
+                    <image :src="item.image" mode="aspectFit"></image>
+                    <!-- <video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover"
+                        v-if="item.type=='video'"></video> -->
                 </view>
             </swiper-item>
         </swiper>
@@ -38,7 +38,7 @@
                     <view class="text-cut">标题标题标题标题标题标题标题标题标题标题</view>
                 </view>
                 <view class="content">
-                    <image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg" mode="aspectFill"></image>
+                    <image src="http://localhost/profile/upload/2020/06/22/d05a37f530c8c34b9c06ac7bcd342894.jpg" mode="aspectFill"></image>
                     
                     <view class="desc">
                         <view>
@@ -77,42 +77,27 @@
                currentImg: '',
                previewImgList: [],
                PINum: 0,
-                 
+                 articles:[],
+                 images:[],
                 cardCur: 0,
-                swiperList: [{
-                    id: 0,
-                    type: 'image',
-                    url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-                }, {
-                    id: 1,
-                    type: 'image',
-                    url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg',
-                }, {
-                    id: 2,
-                    type: 'image',
-                    url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-                }, {
-                    id: 3,
-                    type: 'image',
-                    url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-                }, {
-                    id: 4,
-                    type: 'image',
-                    url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-                }, {
-                    id: 5,
-                    type: 'image',
-                    url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-                }, {
-                    id: 6,
-                    type: 'image',
-                    url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-                }],
             }
         },
         onLoad() {
             // console.info(this.swiperList.map(item=>item.url))
-            this.previewImgList = this.swiperList.map(item=>item.url)
+			let page = this;
+			// 请求数据
+			getApp().request({
+			    url: '/front/index/info',
+			    successParse: function(data) {
+			        console.info(data)
+			        // uni.setStorageSync('member', data)
+			// 文章轮播
+			page.articles = data.articles;
+			// 图片轮播
+			page.images = data.images;
+            page.previewImgList = page.images.map(item=>item.image);
+			    }
+			})
         },
         methods: {
             previewImg(imgSrc) {
@@ -123,7 +108,7 @@
             cardSwiper(e) {
                 this.cardCur = e.detail.current
             },
-            clickSwiper(id){
+            toArticleDetail(id){
                 uni.navigateTo({
                     url:'/pages/article/article?articleId='+id
                 })
