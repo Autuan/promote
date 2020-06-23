@@ -78,6 +78,10 @@
             	"navigationBarTitleText": "历史推广费用"
             }
         }
+        ,{
+            "path" : "pages/qrcode/code",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
