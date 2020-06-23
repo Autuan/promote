@@ -80,7 +80,12 @@
         }
         ,{
             "path" : "pages/qrcode/code",
-            "style" : {}
+            "style": {
+                "navigationBarTitleText": "",
+                "app-plus": {
+                    "titleNView": false
+                }
+            }
         }
     ],
 	"globalStyle": {
