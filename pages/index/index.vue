@@ -46,7 +46,7 @@
                         <view class="text-content margin-top">
                             <!-- <text class="response">点击查看推广攻略</text> -->
                             <!-- <text>&nbsp;</text> -->
-                            <button class="cu-btn line-orange">二维码</button>
+                            <button class="cu-btn line-orange" @tap="qrCodeBtn(task.id)">二维码</button>
                             <button class="cu-btn bg-gray margin-left"  @tap="toArticleDetail(task.articleId)">推广赚{{task.reward}}元</button>
                         </view>
                         <view>
@@ -79,26 +79,30 @@
                 images: [],
                 tasks: [],
                 cardCur: 0,
+				member:{},
             }
         },
         onLoad() {
-            // console.info(this.swiperList.map(item=>item.url))
             let page = this;
-            // 请求数据
-            getApp().request({
-                url: '/front/index/info',
-                successParse: function(data) {
-                    console.info(data)
-                    // uni.setStorageSync('member', data)
-                    // 文章轮播
-                    page.articles = data.articles;
-                    // 图片轮播
-                    page.images = data.images;
-                    page.previewImgList = page.images.map(item => item.image);
-                    // 任务
-                    page.tasks = data.tasks;
-                }
-            })
+			 getApp().afterLogin(getCurrentPages(), function() {
+				 let member = uni.getStorageSync('member')
+				 console.info(member)
+				 page.member = member;
+				 getApp().request({
+				     url: page.baseUrl() + '/index/info',
+				     successParse: function(data) {
+				         console.info(data)
+				         // uni.setStorageSync('member', data)
+				         // 文章轮播
+				         page.articles = data.articles;
+				         // 图片轮播
+				         page.images = data.images;
+				         page.previewImgList = page.images.map(item => item.image);
+				         // 任务
+				         page.tasks = data.tasks;
+				     }
+				 })
+			 });
         },
         methods: {
             getTagList(tags){
@@ -119,7 +123,26 @@
                     url: '/pages/article/article?articleId=' + id
                 })
                 }
-            }
+            },
+			qrCodeBtn(taskId){
+				// 领取任务
+				let page = this;
+				getApp().request({
+				    url: page.baseUrl() +'/task/receive',
+					data:{
+						taskId:taskId,
+						salesmanId:page.member.id,
+					},
+				    successParse: function(data) {
+				        console.info(data)
+				        // 跳转到二维码页面
+				        uni.navigateTo({
+				            url: '/pages/qrcode/code?taskId=' + taskId
+				        })
+				    }
+				})
+				
+			}
         }
     }
 </script>

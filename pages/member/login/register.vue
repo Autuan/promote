@@ -149,7 +149,7 @@
                     return
                 }
                getApp().request({
-                   url: '/front/salesman/register',
+                   url: page.baseUrl() +'/salesman/register',
                    data: page.submitData,
                    successParse: function(data) {
                        uni.setStorageSync('member', data)

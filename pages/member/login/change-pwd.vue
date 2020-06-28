@@ -76,7 +76,7 @@
                     return
                 }
                 getApp().request({
-                    url: '/front/salesman/login',
+                    url: page.baseUrl() +'/salesman/login',
                     data: page.submitData,
                     successParse: function(data) {
                         console.info(data)

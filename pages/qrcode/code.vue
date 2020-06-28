@@ -14,12 +14,16 @@
 		},
         onLoad(option) {
 			let page = this;
-            // src = 'http://localhost/front/task/get'
+getApp().afterLogin(getCurrentPages(), function() {
+	
 			let member = uni.getStorageSync('member')
 			console.info(member)
-			let taskId = '17b9955cc8334594b3e286ca0abee9c5'
-			let memberId = "024a4dcf71a046f694e2e05f28562560"
-			page.src= `http://127.0.0.1:80/front/task/qrcode/${taskId}/${memberId}`
+			// let taskId = '17b9955cc8334594b3e286ca0abee9c5'
+			let taskId = option.taskId;
+			// let memberId = "024a4dcf71a046f694e2e05f28562560"
+			let memberId = member.id;
+			page.src= page.baseUrl() + `/task/qrcode/${taskId}/${memberId}`
+	});
         },
 		methods: {
 			

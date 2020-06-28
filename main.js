@@ -13,6 +13,13 @@ Vue.prototype.reg = {
 Vue.prototype.regType = [
     'idCard','phone','email'
 ]
+Vue.prototype.baseUrl = function() {
+    if (process.env.NODE_ENV === 'development') {
+        return 'http://127.0.0.1:80/front';
+    } else {
+        return '/admin/front';
+    }
+};
 
 const app = new Vue({
     ...App

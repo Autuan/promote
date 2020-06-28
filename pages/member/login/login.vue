@@ -54,11 +54,29 @@
                 }
 
                 getApp().request({
-                    url: '/front/salesman/login',
-                    data: page.submitData,
+                    url: page.baseUrl() +'/salesman/login',
+                    data: {
+						mobile:page.submitData.mobile,
+						password:md5(page.submitData.password),
+					},
                     successParse: function(data) {
-                        console.info(data)
                         uni.setStorageSync('member', data)
+                        uni.setStorageSync('memberId', data.id)
+						
+						setTimeout(function(){
+							uni.clearStorageSync()
+						},1000*60*60*6)
+						
+						if(page.submitData.password === '123456') {
+							uni.navigateTo({
+								url:'/pages/member/login/change-pwd'
+							})
+						} else {
+							uni.navigateTo({
+								url:'/pages/index/index'
+							})
+						}
+						
                     }
                 })
             },
