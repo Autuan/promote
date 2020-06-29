@@ -23,7 +23,7 @@
 			let page = this;
 			// 请求数据
 			getApp().request({
-				url: '/front/article/detail/' + option.articleId,
+				url: page.baseUrl()+'/article/detail/' + option.articleId,
 				successParse: function(data) {
 					page.content = data.content;
 					uni.setNavigationBarTitle({

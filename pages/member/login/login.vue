@@ -22,6 +22,7 @@
 </template>
 
 <script>
+    import md5 from '@/components/ccdzhang-dokey/md5.js';
     export default {
         data() {
             return {
@@ -37,7 +38,7 @@
                 let tipObj = {
                     mobile: {
                         name: '手机号码',
-                        type: 'phone',
+                        // type: 'phone',
                     },
                     password: {
                         name: '密码',
@@ -65,15 +66,15 @@
 						
 						setTimeout(function(){
 							uni.clearStorageSync()
-						},1000*60*60*6)
+						},1000*60)
 						
 						if(page.submitData.password === '123456') {
 							uni.navigateTo({
 								url:'/pages/member/login/change-pwd'
 							})
 						} else {
-							uni.navigateTo({
-								url:'/pages/index/index'
+							uni.switchTab({
+							    url:'/pages/index/index'
 							})
 						}
 						

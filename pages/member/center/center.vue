@@ -10,17 +10,18 @@
             <view class="cu-item shadow">
                 <view class="cu-list menu-avatar">
                     <view class="cu-item">
-                        <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+                        <view class="cu-avatar round lg" :style="'background-image:url('+member.headImg+');'"
+                        style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
                         <view class="content flex-sub">
                             <view class="text-grey">
-                                <text>张三</text>
-                                <view class="margin-left padding-xs">	
-                                    <view class='cu-tag line-orange'>title</view>
+                                <text>{{member.name}}</text>
+                                <view class="margin-left padding-xs">
+                                    <view class='cu-tag line-orange'>{{member.level}}</view>
                                 </view>
                             </view>
 
                             <view class="text-gray text-sm flex justify-between">
-                                <text>16688888888</text>
+                                <text>{{member.mobile}}</text>
                             </view>
                         </view>
                     </view>
@@ -33,8 +34,7 @@
                 <view class="big" :class="['swiper-item',]" style="height:150px;background:linear-gradient(94deg,rgba(150,147,168,1),rgba(150,147,164,1));
                     box-shadow:0px 3px 12px 0px rgba(195,164,110,0.23);">
                     <text class=" title cuIcon-sponsor " style="font-size: 100upx;"></text>
-                    <text class="margin-top text-white text-xl" 
-					>历史推广费</text>
+                    <text class="margin-top text-white text-xl">历史推广费</text>
                     <!-- <i-price class="" countSize="24" symbolSize="16" decimal="small" :value="8888" /> -->
                     <!-- <text class="sub_title">点击查看</text> -->
                 </view>
@@ -44,7 +44,7 @@
                     box-shadow:0px 3px 12px 0px rgba(195,164,110,0.23);">
                     <text class=" title cuIcon-redpacket_fill line-yellow" style="font-size: 100upx;color:yellow;"></text>
                     <text class="margin-top text-xl" style="color: yellow;">本月预估推广费</text>
-                    <i-price class="" countSize="24" symbolSize="16" decimal="small" priceColor="yellow" :value="8888" />
+                    <i-price class="" countSize="24" symbolSize="22" decimal="2" priceColor="yellow" :value="rewardCount.thisMoonReward" />
                     <text class="sub_title">
                     </text>
                 </view>
@@ -52,9 +52,9 @@
             <swiper-item>
                 <view class="big" :class="['swiper-item',]" style="height:150px;background:linear-gradient(94deg,rgba(150,147,168,1),rgba(150,147,164,1));
                     box-shadow:0px 3px 12px 0px rgba(195,164,110,0.23);">
-                     <text class=" title cuIcon-moneybagfill " style="font-size: 100upx;"></text>
+                    <text class=" title cuIcon-moneybagfill " style="font-size: 100upx;"></text>
                     <text class="margin-top text-white text-xl">累计推广费</text>
-                    <i-price class="" countSize="24" symbolSize="16" decimal="small" :value="1200" priceColor="white"/>
+                    <i-price class="" countSize="24" symbolSize="22" decimal="2" :value="rewardCount.historyReward" priceColor="white" />
                 </view>
             </swiper-item>
         </swiper>
@@ -113,6 +113,8 @@
         },
         data() {
             return {
+                member: {},
+                rewardCount: {},
                 title: 'Hello',
                 bigIdx: 1,
                 vips: [{
@@ -148,53 +150,57 @@
                         desc: '邀请好友获得7积分奖励'
                     }
                 ],
-                welfare: [{
-                        icon: '/static/icon_evaluate.png',
-                        name: '专属礼包'
-                    },
-                    {
-                        icon: '/static/icon_gift.png',
-                        name: '生日礼包'
-                    },
-                    {
-                        icon: '/static/icon_score.png',
-                        name: '我的积分'
-                    },
-                    {
-                        icon: '/static/icon_other.png',
-                        name: '其他礼包'
-                    }
-                ]
 
             }
         },
         onLoad() {
-
+            let page = this;
+            getApp().afterLogin(getCurrentPages(), function() {
+                let member = uni.getStorageSync('member')
+                page.member = member;
+                
+                
+                getApp().request({
+                    url: page.baseUrl() + '/salesman/calcuReward',
+                    data: {
+                        salesmanId:member.id
+                    },
+                    successParse: function(data) {
+                        console.info('calcuReward success !')
+                        console.info(data)
+                        page.rewardCount = data;
+                        // uni.switchTab({
+                        //     url:'/pages/index/index'
+                        // })
+                    }
+                })
+                
+            });
         },
         methods: {
             swiperChange(e) {
                 this.bigIdx = e.detail.current
             },
-            dataDetail(){
-              uni.navigateTo({
-                  url:'/pages/member/data/data'
-              })  
-            },
-            rankingDetail(){
+            dataDetail() {
                 uni.navigateTo({
-                    url:'/pages/member/ranking/ranking'
-                })  
+                    url: '/pages/member/data/data'
+                })
             },
-			toHistoryData(){
-				uni.navigateTo({
-				    url:'/pages/member/data/history-data'
-				})  
-			},
-			toThisMoonData(){
-				uni.navigateTo({
-				    url:'/pages/member/data/this-moon'
-				})  
-			}
+            rankingDetail() {
+                uni.navigateTo({
+                    url: '/pages/member/ranking/ranking'
+                })
+            },
+            toHistoryData() {
+                uni.navigateTo({
+                    url: '/pages/member/data/history-data'
+                })
+            },
+            toThisMoonData() {
+                uni.navigateTo({
+                    url: '/pages/member/data/this-moon'
+                })
+            }
         }
     }
 </script>
@@ -393,47 +399,6 @@
                     align-items: center;
                     justify-content: center;
                 }
-            }
-        }
-    }
-
-    .welfare {
-        width: 92%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        background: rgba(255, 255, 255, 1);
-        box-shadow: 0px 1px 21px 0px rgba(103, 103, 103, 0.2);
-        border-radius: 10px;
-        margin-bottom: 10px;
-
-        .item {
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            .border {
-                margin-top: 5px;
-                border: 2px solid #c9ac7a;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                .img {
-                    width: 40px;
-                    height: 40px;
-                }
-            }
-
-            .txt {
-                margin-top: 5px;
-                font-size: 10px;
-                font-weight: 300;
-                color: rgba(153, 153, 153, 1);
             }
         }
     }

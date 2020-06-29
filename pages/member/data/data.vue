@@ -9,8 +9,8 @@
         </uni-card>
 
         <!-- 联合拉新 -->
-        <uni-card title="联合拉新" @tap="promoteUserDetail">
-            内容主体，可自定义内容及样式
+        <uni-card title="" @tap="promoteUserDetail">
+            联合拉新
            <view class="cu-list grid no-border col-4" style="width: 100%; " v-if="showB">
                <view class="cu-item" >
                    <text>产品名称</text>
@@ -25,7 +25,8 @@
                    <text>审核时间</text>
                </view>
            </view>
-           <view class="cu-list grid no-border col-4" style="width: 100%; " v-if="showB" v-for="i in 4" :kye="i">
+           <view class="cu-list grid no-border col-4" style="width: 100%; " 
+           v-if="showB" v-for="i in 4" :kye="i">
                <view class="cu-item" >
                    <text>产品{{i}}</text>
                </view>
@@ -42,8 +43,8 @@
         </uni-card>
 
         <!-- 团队业绩 -->
-        <uni-card title="团队业绩" @tap="groupDataDetail">
-            内容主体，可自定义内容及样式
+        <uni-card title="" @tap="groupDataDetail">
+            团队业绩
         </uni-card>
 
 

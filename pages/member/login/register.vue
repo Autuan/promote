@@ -75,6 +75,7 @@
 </template>
 
 <script>
+    import md5 from '@/components/ccdzhang-dokey/md5.js';
 	export default {
 		data() {
 			return {
@@ -104,7 +105,7 @@
                 let tipObj = {
                     mobile: {
                         name: '手机号码',
-                        type: 'phone',
+                        // type: 'phone',
                     },
                     name: {
                         name: '姓名',
@@ -148,6 +149,13 @@
                     getApp().tip('两次密码不一致!')
                     return
                 }
+                if(page.submitData.password === '123456') {
+                    getApp().tip('密码过于简单!')
+                    return;
+                }
+                let encode = md5(page.submitData.password);
+                 page.submitData.password = encode;
+                 page.submitData.repeatPwd = encode;
                getApp().request({
                    url: page.baseUrl() +'/salesman/register',
                    data: page.submitData,
