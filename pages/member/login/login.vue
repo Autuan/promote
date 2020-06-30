@@ -66,7 +66,7 @@
 						
 						setTimeout(function(){
 							uni.clearStorageSync()
-						},1000*60)
+						},1000*60*30)
 						
 						if(page.submitData.password === '123456') {
 							uni.navigateTo({

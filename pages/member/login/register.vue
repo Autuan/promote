@@ -63,7 +63,7 @@
 			<!-- <input class="phone-input" password placeholder="请再次输入密码" v-model="submitData.repeatPwd"/> -->
 		</view>
 		<view class="">
-			<view class="zaiui-btn-view">
+			<view class="zaiui-btn-view" style="position: fixed;bottom: 0;width: 100%;">
 				<button class="zaiui-btn" @tap="register">确认注册</button>
 			</view>
 			<view class="font-tag-view">
@@ -161,6 +161,9 @@
                    data: page.submitData,
                    successParse: function(data) {
                        uni.setStorageSync('member', data)
+					   uni.switchTab({
+					   	url:'/pages/index/index'
+					   })
                    }
                })
             },
