@@ -169,9 +169,6 @@
                         console.info('calcuReward success !')
                         console.info(data)
                         page.rewardCount = data;
-                        // uni.switchTab({
-                        //     url:'/pages/index/index'
-                        // })
                     }
                 })
                 

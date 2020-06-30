@@ -57,10 +57,7 @@
     import uniCard from '@/components/uni-card/uni-card.vue';
     export default {
         components: {
-            // listCell,
-            // uniGrid,
             uniCard,
-            // iPrice
         },
         data() {
             const currentDate = this.getDate({
@@ -96,10 +93,32 @@
                 return this.getDate('end');
             }
         },
+        onLoad(){
+            return;
+            
+        },
         methods: {
+            queryHistoryData(){
+                let page = this;
+                 let member = uni.getStorageSync('member')
+                getApp().request({
+                    url: page.baseUrl() + '/salesman/historyReward',
+                    data: {
+                        salesmanId:member.id,
+                        queryDateStr:page.date,
+                        // queryDate:'2020-08-06 00:00:00',
+                    },
+                    successParse: function(data) {
+                        console.info('historyReward success !')
+                        console.info(data)
+                        // page.rewardCount = data;
+                    }
+                })
+            },
             bindDateChange: function(e) {
                 console.log(e)
                 this.date = e.target.value
+                this.queryHistoryData();
             },
             getDate(type) {
                 const date = new Date();

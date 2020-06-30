@@ -62,10 +62,7 @@
     import uniCard from '@/components/uni-card/uni-card.vue';
     export default {
         components: {
-            // listCell,
-            // uniGrid,
             uniCard,
-            // iPrice
         },
         data() {
             const currentDate = this.getDate({
