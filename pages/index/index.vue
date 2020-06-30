@@ -5,8 +5,6 @@
             duration="500">
             <swiper-item v-for="(item,index) in articles" :key="index" @tap="toArticleDetail(item.id)">
                 <image :src="item.image" mode="aspectFill"></image>
-                <!-- <video :src="item.image" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover"
-                    v-if="item.type=='video'"></video> -->
             </swiper-item>
         </swiper>
 
@@ -23,14 +21,16 @@
             <swiper-item v-for="(item,index) in images" :key="index" :class="cardCur==index?'cur':''" @tap="previewImg(item.image)">
                 <view class="swiper-item">
                     <image :src="item.image" mode="aspectFit"></image>
-                    <!-- <video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover"
-                        v-if="item.type=='video'"></video> -->
                 </view>
             </swiper-item>
         </swiper>
 
 
-
+		<view class="cu-bar bg-white margin-top">
+            <view class="action">
+                <text class="cuIcon-title text-blue"></text> 业务专区
+            </view>
+        </view>
         <view class="cu-card article no-card">
             <view class="cu-item shadow" v-for="task in tasks" :key="task.id">
                 <view class="title"  @tap="toArticleDetail(task.articleId)">
@@ -38,19 +38,17 @@
                 </view>
                 <view class="content">
                     <image :src="task.image" mode="aspectFill"  @tap="toArticleDetail(task.articleId)"></image>
-
                     <view class="desc">
                         <view  @tap="toArticleDetail(task.articleId)">
                             <view class="cu-tag bg-red light " :key="i" v-for="(tag,i) in getTagList(task.tags)">{{tag}}</view>
                         </view>
-                        <view class="text-content margin-top">
-                            <!-- <text class="response">点击查看推广攻略</text> -->
+                            <view class="response" @tap="toArticleDetail(task.articleId)"><text class="text-gray">{{task.summary}}</text></view>
+                        <view class="text-content ">
                             <!-- <text>&nbsp;</text> -->
                             <button class="cu-btn line-orange" @tap="qrCodeBtn(task.id)">二维码</button>
                             <button class="cu-btn bg-gray margin-left"  @tap="toArticleDetail(task.articleId)">推广赚{{task.reward}}元</button>
                         </view>
                         <view>
-
                         </view>
                     </view>
                 </view>
@@ -68,7 +66,6 @@
     export default {
         components: {
             hxPreviewImg,
-            // iPrice
         },
         data() {
             return {
@@ -91,8 +88,6 @@
 				 getApp().request({
 				     url: page.baseUrl() + '/index/info',
 				     successParse: function(data) {
-				         console.info(data)
-				         // uni.setStorageSync('member', data)
 				         // 文章轮播
 				         page.articles = data.articles;
 				         // 图片轮播
@@ -110,7 +105,6 @@
             },
             previewImg(imgSrc) {
                 this.currentImg = imgSrc;
-                // this.previewImgList = this.swiperList.map(item=>item.url);
                 this.PINum++;
             },
             cardSwiper(e) {

@@ -1,12 +1,9 @@
 <template>
     <view class="page_content">
         <view class="header">
-            <!-- <image class="btn" src="/static/icon_scan.png"></image> -->
-            <!-- <text class="title">会员中心</text> -->
-            <!-- <image class="btn" src="/static/icon_msg.png"></image> -->
         </view>
 
-        <view class="cu-card fL " style="width: 60%;height: 200upx;">
+        <view class="cu-card fL " style="width: 100%;height: 200upx;">
             <view class="cu-item shadow">
                 <view class="cu-list menu-avatar">
                     <view class="cu-item">
@@ -96,6 +93,24 @@
                 </view>
             </view>
         </view>
+		
+		<view class="cu-list menu  " style="width: 100%;">
+		    <!-- <view class="cu-item arrow" @tap="dataDetail">
+		        <view class="content">
+		            <text class="cuIcon-circlefill text-grey"></text>
+		            <text class="text-grey">业绩数据</text>
+		        </view>
+		        <view class="action">
+		            <view class="cu-tag round bg-blue light">去看看</view>
+		        </view>
+		    </view> -->
+		    <view class="cu-item " @tap="logOut">
+		        <view class="content">
+		            <text class="cuIcon-footprint text-grey"></text>
+		            <text class="text-grey">退出登录</text>
+		        </view>
+		    </view>
+		</view>
 
 
     </view>
@@ -197,7 +212,14 @@
                 uni.navigateTo({
                     url: '/pages/member/data/this-moon'
                 })
-            }
+            },
+			logOut() {
+				uni.clearStorage();
+				uni.clearStorageSync();
+				uni.reLaunch({
+					url:'/pages/member/login/login'
+				})
+			}
         }
     }
 </script>
