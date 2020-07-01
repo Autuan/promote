@@ -110,13 +110,14 @@
                     .filter(item=>item.taskId===taskId)[0];
                 if(task) {
                     switch(task.status) {
-                        case 0:return '申请二维码';
+                        case 0:return '申请';
                         case 1:return '审核中';
                         case 2:return '二维码';
-                        case 3:return '申请拒绝';
+                        case 3:return '拒绝';
+						default:return '申请';
                     }
                 } else{
-                    return '申请二维码'
+                    return '申请'
                 }
             },
             getTagList(tags){
@@ -131,10 +132,9 @@
             },
             toArticleDetail(id) {
                 if(id) {
-                    
-                uni.navigateTo({
-                    url: '/pages/article/article?articleId=' + id
-                })
+					uni.navigateTo({
+						url: '/pages/article/article?articleId=' + id
+					})
                 }
             },
             applyTask(taskId){
@@ -155,8 +155,10 @@
                     .filter(item=>item.taskId===taskId)[0];
                 let status = 0 ;
                 if(task) {
-                    status = task.status;
+                    status = task.status || 0;
                 }
+				// console.info('status--->'+status)
+				// console.info(task)
                 switch(status) {
                     // 申请
                     case 0: {
