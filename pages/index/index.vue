@@ -46,7 +46,7 @@
                         <view class="text-content margin-top">
                             <!-- <text class="response">点击查看推广攻略</text> -->
                             <!-- <text>&nbsp;</text> -->
-                            <button class="cu-btn line-orange" @tap="qrCodeBtn(task.id)">二维码</button>
+                            <button class="cu-btn line-orange" @tap="qrCodeBtn(task.id)">{{calcuStatus(task.id)}}</button>
                             <button class="cu-btn bg-gray margin-left"  @tap="toArticleDetail(task.articleId)">推广赚{{task.reward}}元</button>
                         </view>
                         <view>
@@ -78,6 +78,7 @@
                 articles: [],
                 images: [],
                 tasks: [],
+                receivedList: [],
                 cardCur: 0,
 				member:{},
             }
@@ -86,13 +87,13 @@
             let page = this;
 			 getApp().afterLogin(getCurrentPages(), function() {
 				 let member = uni.getStorageSync('member')
-				 console.info(member)
 				 page.member = member;
 				 getApp().request({
 				     url: page.baseUrl() + '/index/info',
+                     data:{
+                         salesmanId:member.id,
+                     },
 				     successParse: function(data) {
-				         console.info(data)
-				         // uni.setStorageSync('member', data)
 				         // 文章轮播
 				         page.articles = data.articles;
 				         // 图片轮播
@@ -100,17 +101,32 @@
 				         page.previewImgList = page.images.map(item => item.image);
 				         // 任务
 				         page.tasks = data.tasks;
+				         page.receivedList = data.receivedList;
 				     }
 				 })
 			 });
         },
         methods: {
+            calcuStatus(taskId){
+                let page = this;
+                let task = page.receivedList
+                    .filter(item=>item.taskId===taskId)[0];
+                if(task) {
+                    switch(task.status) {
+                        case 0:return '申请二维码';
+                        case 1:return '审核中';
+                        case 2:return '二维码';
+                        case 3:return '申请拒绝';
+                    }
+                } else{
+                    return '申请二维码'
+                }
+            },
             getTagList(tags){
               return tags.split(',');
             },
             previewImg(imgSrc) {
                 this.currentImg = imgSrc;
-                // this.previewImgList = this.swiperList.map(item=>item.url);
                 this.PINum++;
             },
             cardSwiper(e) {
@@ -124,23 +140,62 @@
                 })
                 }
             },
+            applyTask(taskId){
+                let page =this;
+                getApp().request({
+                    url: page.baseUrl() +'/task/receive',
+                	data:{
+                		taskId:taskId,
+                		salesmanId:page.member.id,
+                	},
+                    successParse: function(data) {
+                    }
+                })
+            },
 			qrCodeBtn(taskId){
-				// 领取任务
-				let page = this;
-				getApp().request({
-				    url: page.baseUrl() +'/task/receive',
-					data:{
-						taskId:taskId,
-						salesmanId:page.member.id,
-					},
-				    successParse: function(data) {
-				        console.info(data)
-				        // 跳转到二维码页面
-				        uni.navigateTo({
-				            url: '/pages/qrcode/code?taskId=' + taskId
-				        })
-				    }
-				})
+                let page = this;
+                let task = page.receivedList
+                    .filter(item=>item.taskId===taskId)[0];
+                let status = 0 ;
+                if(task) {
+                    status = task.status;
+                }
+                switch(status) {
+                    // 申请
+                    case 0: {
+                        page.applyTask(taskId);
+                        if(task) {
+                            task.status = 1;
+                        }else {
+                            page.receivedList.push({
+                                taskId:taskId,
+                                status:1,
+                            })
+                        }
+                        break;
+                    }
+                    // 已申请
+                   case 1:{
+                       getApp().tip('正在审核中')
+                       break;
+                   } 
+                    // 通过,展示二维码
+                    case 2:{
+                      uni.navigateTo({
+                          url: '/pages/qrcode/code?taskId=' + taskId
+                      })
+                        break;
+                    } 
+                    // 拒绝
+                    case 3:{
+                        getApp().tip('您的申请被拒绝')
+                        break;
+                    } 
+                    
+                }
+                return;
+				
+				        
 				
 			}
         }
