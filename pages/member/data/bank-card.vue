@@ -16,7 +16,7 @@
 
             <view style="width: 100%; float:left">
                 <view class="fL text-xl" style="width: 50%;">发卡总量: 16</view>
-                <view class="fL text-xl" style="width: 50%;">推广费用: 400元</view>
+                <!-- <view class="fL text-xl" style="width: 50%;">推广费用: 400元</view> -->
             </view>
 
             <view class="cu-list grid no-border col-4" style="width: 100%; " v-if="showA">
@@ -24,7 +24,7 @@
                     <text>产品名称</text>
                 </view>
                 <view class="cu-item">
-                    <text>订单号</text>
+                    <text>ApplyId</text>
                 </view>
                 <view class="cu-item">
                     <text>状态</text>
@@ -32,27 +32,21 @@
                 <view class="cu-item">
                     <text>申请时间</text>
                 </view>
-               <!-- <view class="cu-item">
-                    <text>审核时间</text>
-                </view> -->
             </view>
             <view class="cu-list grid no-border col-4" style="width: 100%;word-break: break-all;margin-top: 0upx;padding: 0upx; " 
-            v-if="showA" v-for="i in 4" :kye="i">
+            v-if="showA" v-for="(item,index) in list" :key="index">
                 <view class="cu-item">
-                    <text>产品{{i}}</text>
+                    <text>{{item.name}}</text>
                 </view>
                 <view class="cu-item" style="">
-                    <text style="">1173442867927126016</text>
+                    <text style="">{{item.orderNo}}</text>
                 </view>
                 <view class="cu-item">
-                    <text>{{i/2==0?'通过':'拒绝'}}</text>
+                    <text>{{item.approveStatus}}</text>
                 </view>
                 <view class="cu-item">
-                    <text>2020-06-08</text>
+                    <text>{{item.verifyDate}}</text>
                 </view>
-              <!--  <view class="cu-item">
-                    <text>2020-06-08</text>
-                </view> -->
             </view>
         </uni-card>
     </view>
@@ -71,6 +65,7 @@
             return {
                 showA: true,
                 date: currentDate,
+                list: [],
             }
         },
         computed: {
@@ -81,10 +76,31 @@
                 return this.getDate('end');
             }
         },
+		onLoad(){
+			let page = this;
+			getApp().afterLogin(getCurrentPages(), function() {
+				page.member = uni.getStorageSync('member');
+				page.bankList();
+			});
+		},
         methods: {
+			bankList() {
+				let page = this;
+				getApp().request({
+					url: page.baseUrl() + '/data/bank/bankList',
+					data: {
+						salesmanId: page.member.id,
+						queryDateStr: page.date,
+					},
+					successParse: function(data) {
+						page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
+						page.list = data;
+					}
+				})
+			},
             bindDateChange: function(e) {
-                console.log(e)
-                this.date = e.target.value
+                this.date = e.target.value;
+				this.bankList();
             },
             getDate(type) {
                 const date = new Date();
@@ -99,7 +115,6 @@
                 }
                 month = month > 9 ? month : '0' + month;;
                 day = day > 9 ? day : '0' + day;
-                // return `${year}-${month}-${day}`;
                 return `${year}-${month}`;
             }
         }
