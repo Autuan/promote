@@ -137,15 +137,26 @@
 					})
                 }
             },
-            applyTask(taskId){
+            applyTask(taskId,task){
                 let page =this;
+                // return;
                 getApp().request({
                     url: page.baseUrl() +'/task/receive',
                 	data:{
                 		taskId:taskId,
+                		// taskId:task.id,
                 		salesmanId:page.member.id,
                 	},
                     successParse: function(data) {
+                        if(task) {
+                            task.status = 1;
+                        }else {
+                            page.receivedList.push({
+                                taskId:taskId,
+                                // taskId:task.id,
+                                status:1,
+                            })
+                        }
                     }
                 })
             },
@@ -157,20 +168,18 @@
                 if(task) {
                     status = task.status || 0;
                 }
-				// console.info('status--->'+status)
-				// console.info(task)
                 switch(status) {
                     // 申请
                     case 0: {
-                        page.applyTask(taskId);
-                        if(task) {
-                            task.status = 1;
-                        }else {
-                            page.receivedList.push({
-                                taskId:taskId,
-                                status:1,
-                            })
-                        }
+                        page.applyTask(taskId,task);
+                        // if(task) {
+                        //     task.status = 1;
+                        // }else {
+                        //     page.receivedList.push({
+                        //         taskId:taskId,
+                        //         status:1,
+                        //     })
+                        // }
                         break;
                     }
                     // 已申请
