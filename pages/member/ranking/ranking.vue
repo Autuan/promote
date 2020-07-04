@@ -1,14 +1,14 @@
 <template>
     <view>
+		<view class="bg-white text-center">联系客服：139********</view>
         <view class="cu-timeline">
-
             <view class="cu-item text-blue" v-for="(item,i) in list"  :key="i"
                 :class="i < 3 ? 'cuIcon-upstagefill':''"   :style="caluRankingStyle(i)" >
                 <view class="bg-white shadow-blur content" style="padding: 0upx;">
                     <view class="cu-list menu-avatar radius">
                         <view class="margin-left" style="font-size: 40upx;" :style="caluRankingStyle(i)"> No.{{i+1}}</view>
                         <view class="cu-item" style="padding: 0upx;">
-                            <view class="cu-avatar round lg" :style="'background-image:url('+item.image+');'">
+                            <view class="cu-avatar round lg" :style="'background-image:url('+item.headImg+');'">
                             </view>
                             <view class="content" style="width: 20%;">
                                 <view class="text-grey">
@@ -16,7 +16,7 @@
                                 </view>
                             </view>
                             <view class="action" style="width: 60%;">
-                                <i-price style="width: 60%;" class=" text-right" countSize="14" symbolSize="14" :value="item.money" />
+                                <i-price style="width: 60%;" class=" text-right" countSize="14" symbolSize="14" :value="item.amount" />
                             </view>
                         </view>
                     </view>
@@ -39,16 +39,34 @@
             };
         },
         onLoad(){
-            let that = this;
-          for(let i=0;i<10;i++) {
-              that.list.push({
-                  image:'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
-                  name:'张三' + i,
-                  money:10+i,
-              })
-          }  
+            let page = this;
+          // for(let i=0;i<10;i++) {
+          //     page.list.push({
+          //         image:'https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg',
+          //         name:'张三' + i,
+          //         money:10+i,
+          //     })
+          // }  
+		  this.ranking();
         },
         methods:{
+			ranking() {
+				let page = this;
+				getApp().request({
+					url: page.baseUrl() + '/salesman/ranking',
+					data: {
+						// salesmanId: page.member.id,
+						// queryDateStr: page.date,
+					},
+					successParse: function(data) {
+						console.info('bank list')
+						console.info(data);
+						
+						// page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
+						page.list = data;
+					}
+				})
+			},
             caluRankingStyle(i){
                 // return 'aa';
                 switch(i) {

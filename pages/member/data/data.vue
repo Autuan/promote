@@ -3,8 +3,8 @@
         <!-- 发卡订单 -->
         <uni-card title="发卡订单" @tap="bankCardDetail">
             <view style="width: 100%; ">
-                <view class="fL text-xl" style="width: 50%;">本月 5 已通过</view>
-                <view class="fL text-xl" style="width: 50%;">本月 5 已拒绝</view>
+                <view class="fL text-xl" style="width: 50%;">本月 {{passNum}} 已通过</view>
+                <view class="fL text-xl" style="width: 50%;">本月 {{failNum}} 已拒绝</view>
             </view>
         </uni-card>
 
@@ -26,7 +26,7 @@
                </view>
            </view>
            <view class="cu-list grid no-border col-4" style="width: 100%; " 
-           v-if="showB" v-for="i in 4" :kye="i">
+           v-if="showB" v-for="i in 4" :key="i">
                <view class="cu-item" >
                    <text>产品{{i}}</text>
                </view>
@@ -58,13 +58,43 @@
             uniCard,
         },
         data() {
+			const currentDate = this.getDate({
+			    format: true
+			})
             return {
+				date: currentDate,
                 showA:true,
                 showB:false,
                 gridCol: 3,
+				
+				member: {},
+				failNum:0,
+				passNum:0,
             }
         },
+		onLoad(){
+			let page = this;
+			getApp().afterLogin(getCurrentPages(), function() {
+				page.member = uni.getStorageSync('member');
+				page.bankList();
+			});
+		},
         methods:{
+			bankList() {
+				let page = this;
+				getApp().request({
+					url: page.baseUrl() + '/data/bank/bankList',
+					data: {
+						salesmanId: page.member.id,
+						queryDateStr: page.date,
+					},
+					successParse: function(data) {
+						
+						page.failNum = data.filter(item=>item.approveStatus === '审核拒绝').length;
+						page.passNum = data.filter(item=>item.approveStatus === '审核通过').length;
+					}
+				})
+			},
             bankCardDetail(){
               uni.navigateTo({
                   url:'/pages/member/data/bank-card'
@@ -80,7 +110,21 @@
                   url:'/pages/member/data/group-data'
               })  
             },
+           getDate(type) {
+               const date = new Date();
+               let year = date.getFullYear();
+               let month = date.getMonth() + 1;
+               let day = date.getDate();
            
+               if (type === 'start') {
+                   year = year - 60;
+               } else if (type === 'end') {
+                   year = year + 2;
+               }
+               month = month > 9 ? month : '0' + month;;
+               day = day > 9 ? day : '0' + day;
+               return `${year}-${month}`;
+           }
         }
     }
 </script>

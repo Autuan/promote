@@ -15,11 +15,12 @@
             </view>
 
             <view style="width: 100%; float:left">
-                <view class="fL text-xl" style="width: 50%;">发卡总量: 16</view>
+                <view class="fL text-xl" style="width: 50%;">总量: {{list.length}}</view>
                 <!-- <view class="fL text-xl" style="width: 50%;">推广费用: 400元</view> -->
             </view>
-
-            <view class="cu-list grid no-border col-4" style="width: 100%; " v-if="showA">
+<view v-show="list.length<1">没有数据</view>
+<view v-show="list.length>0">
+            <view class="cu-list grid no-border col-4" style="width: 100%; " >
                 <view class="cu-item">
                     <text>产品名称</text>
                 </view>
@@ -30,11 +31,11 @@
                     <text>状态</text>
                 </view>
                 <view class="cu-item">
-                    <text>申请时间</text>
+                    <text>审核时间</text>
                 </view>
             </view>
             <view class="cu-list grid no-border col-4" style="width: 100%;word-break: break-all;margin-top: 0upx;padding: 0upx; " 
-            v-if="showA" v-for="(item,index) in list" :key="index">
+             v-for="(item,index) in list" :key="index">
                 <view class="cu-item">
                     <text>{{item.name}}</text>
                 </view>
@@ -48,7 +49,9 @@
                     <text>{{item.verifyDate}}</text>
                 </view>
             </view>
+			</view>
         </uni-card>
+		
     </view>
 </template>
 
@@ -63,9 +66,9 @@
                 format: true
             })
             return {
-                showA: true,
                 date: currentDate,
                 list: [],
+                member: {},
             }
         },
         computed: {
@@ -93,7 +96,10 @@
 						queryDateStr: page.date,
 					},
 					successParse: function(data) {
-						page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
+						console.info('bank list')
+						console.info(data);
+						
+						// page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
 						page.list = data;
 					}
 				})

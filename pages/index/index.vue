@@ -46,7 +46,9 @@
                         <view class="text-content ">
                             <!-- <text>&nbsp;</text> -->
                             <button class="cu-btn line-orange" @tap="qrCodeBtn(task.id)">{{calcuStatus(task.id)}}</button>
-                            <button class="cu-btn bg-gray margin-left"  @tap="toArticleDetail(task.articleId)">推广赚{{task.reward}}元</button>
+                            <button class="cu-btn bg-gray margin-left"  @tap="toArticleDetail(task.articleId)">
+							{{null != task.reward ? '推广赚'+task.reward+'元':'推广赚收益'}}
+							</button>
                         </view>
                         <view>
                         </view>

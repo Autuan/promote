@@ -21,7 +21,7 @@
         {
         	"path": "pages/member/ranking/ranking",
         	"style": {
-        		"navigationBarTitleText": "排行榜"
+        		"navigationBarTitleText": "本月排行榜"
         	}
         },
         {
@@ -35,6 +35,7 @@
         	"style": {
         		"navigationBarTitleText": "发卡订单"
         	}
+			
         },
         {
         	"path": "pages/member/data/promote-user",
@@ -98,7 +99,7 @@
     	"borderStyle": "black",
     	"backgroundColor": "#fff",
     	"color": "#8F8F94",
-    	"selectedColor": "#ce1a17",
+    	"selectedColor": "#ffff7f",
     	"list": [{
     			"pagePath": "pages/index/index",
     			"iconPath": "static/img/tab/home.png",
@@ -109,7 +110,7 @@
     			"pagePath": "pages/member/center/center",
     			"iconPath": "static/img/tab/me.png",
     			"selectedIconPath": "static/img/tab/me_active.png",
-    			"text": "我"
+    			"text": "合伙人中心"
     		}
     	]
     }

@@ -105,13 +105,14 @@
                 let tipObj = {
                     mobile: {
                         name: '手机号码',
-                        // type: 'phone',
+                        type: 'phone',
                     },
                     name: {
                         name: '姓名',
                     },
                     identifyNumber: {
                         name: '身份证号码',
+						type:'idCard',
                     },
                     brokerageBankNo: {
                         name: '佣金结算卡卡号',
@@ -124,6 +125,7 @@
                     },
                     password: {
                         name: '密码',
+						minLen:6,
                     },
                     gender: {
                         name: '性别',
@@ -161,9 +163,14 @@
                    data: page.submitData,
                    successParse: function(data) {
                        uni.setStorageSync('member', data)
-					   uni.switchTab({
+					   
+					   getApp().tip('注册成功,请稍后')
+					   setTimeout(function(){
+						   
+					   uni.reLaunch({
 					   	url:'/pages/index/index'
 					   })
+					   },1500)
                    }
                })
             },

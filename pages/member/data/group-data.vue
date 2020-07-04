@@ -16,33 +16,33 @@
             <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 375upx)">
                 <view class="cu-item" :class="index==tabCur?'text-green cur':''" v-for="(item,index) in list" :key="index"
                     @tap="TabSelect" :data-id="index">
-                    {{item.name}}
+                    {{item.salesmanName}}
                 </view>
             </scroll-view>
 
             <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 375upx)"
                 :scroll-into-view="'main-'+mainCur" @scroll="VerticalMain">
                 <view class="padding-top padding-lr" v-for="(item,index) in list" :key="index" :id="'main-'+index">
-                    <view>{{item.name}}</view>
-                    <view v-for="recorder in item.recorder" :key='recorder.id'>
+                    <view>{{item.salesmanName}}</view>
+                    <view v-for="recorder in item.detail" :key='recorder.id'>
                     <view class="cu-bar solid-bottom bg-white">
                         <view class="action">
                             <text class="cuIcon-title text-green"></text> {{recorder.date}}</view>
                     </view>
                     <view class="cu-list menu-avatar">
                         <view class="cu-item" style="width: 100%;">
-                            <view class="margin-left-xl text-left" style="width: 40%;">总交易额</view>
+                            <view class="margin-left-xl text-left" style="width: 40%;">交易额</view>
                             <i-price style="width: 60%;" class="margin-right text-right" countSize="14" symbolSize="14"
-                                :value="recorder.totalMoney" />
+                                :value="recorder.count" />
                         </view>
-                        <view class="cu-item" style="width: 100%;">
+                        <!-- <view class="cu-item" style="width: 100%;">
                             <view class="margin-left-xl text-left" style="width: 40%;">新增激活终端</view>
                             <view class="margin-right-xl text-right" style="width: 60%;">{{recorder.newActiveTerminal}}台</view>
                         </view>
                         <view class="cu-item" style="width: 100%;">
                             <view class="margin-left-xl text-left" style="width: 40%;">新增代理</view>
                             <view class="margin-right-xl text-right" style="width: 60%;">{{recorder.newProxy}}人</view>
-                        </view>
+                        </view> -->
                     </view>
                     </view>
                 </view>
@@ -60,7 +60,7 @@
         },
         data() {
             return {
-                list: [
+                list2: [
                     {
                         id: '1',
                         name: '总业绩',
@@ -91,7 +91,8 @@
                         }, {
                             id: '22',
                             date: '2020-05',
-                            totalMoney: 4000,
+                            
+							totalMoney: 4000,
                             newProxy: 15,
                             newActiveTerminal: 24,
                         },
@@ -105,7 +106,7 @@
                          ]
                     },
                 ],
-                list2: [],
+                list: [],
                 tabCur: 0,
                 mainCur: 0,
                 verticalNavTop: 0,
@@ -113,23 +114,86 @@
             };
         },
         onLoad() {
+			let page = this;
+			getApp().afterLogin(getCurrentPages(), function() {
+				page.member = uni.getStorageSync('member');
+				console.info(page.member)
+				// console.info(page.member.groupId)
+				// return;
+				page.groupData();
+				
             uni.showLoading({
                 title: '加载中...',
                 mask: true
             });
-            // let list = [{}];
-            // for (let i = 0; i < 26; i++) {
-            //     list[i] = {};
-            //     list[i].name = String.fromCharCode(65 + i);
-            //     list[i].id = i;
-            // }
-            // this.list = list;
-            this.listCur = list[0];
+            page.listCur = page.list[0];
+			});
         },
         onReady() {
             uni.hideLoading()
         },
         methods: {
+			groupData() {
+				let page = this;
+				getApp().request({
+					url: page.baseUrl() + '/group/groupData',
+					data: {
+						groupId: page.member.groupId,
+						// queryDateStr: page.date,
+					},
+					successParse: function(data) {
+						console.info('groupData list')
+						console.info(data);
+						// 计算团队业绩
+						page.list = data;
+						// return;	
+						let groupDetail = [];
+						for(let item of data[0].detail) {
+							let obj = {
+								count:0,
+								date:item.date,
+								id:item.id,
+							}
+							groupDetail.push(obj);
+						}
+						// let groupDetail = data[0].detail;
+						
+						for(let item of groupDetail) {
+							// item.id;
+							item.count = 0;
+							for(let each of data) {
+								for(let record of each.detail) {
+									
+									
+										if(record.id === item.id) {
+											item.count += record.count;
+										}
+									}
+								}
+						}
+						let groupAccount = {
+							salesmanId:'-1',
+							salesmanName:'总业绩',
+							detail:groupDetail,
+						};
+						let list =[groupAccount]
+						list = list.concat(data);
+						console.info('groupDetail')
+						console.info(groupDetail)
+						console.info(list)
+						page.list = list;
+						// for(let each of data) {
+						// 	// let sum = 0;
+						// 	for(let item of each.detail) {
+						// 		item[groopDetail]
+						// 		sum+=
+						// 	}
+						// }
+						// page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
+						// page.list = data;
+					}
+				})
+			},
             TabSelect(e) {
                 this.tabCur = e.currentTarget.dataset.id;
                 this.mainCur = e.currentTarget.dataset.id;

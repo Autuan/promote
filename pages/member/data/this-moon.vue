@@ -1,8 +1,7 @@
 <template>
-    <view>
-<swiper class="card-swiper"  :indicator-dots="false" :circular="true"
-		 :autoplay="false" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
-		 indicator-active-color="#0081ff">
+	<view>
+		<!-- <swiper class="card-swiper" :indicator-dots="false" :circular="true" :autoplay="false" interval="5000" duration="500"
+		 @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
 			<swiper-item v-for="(item,index) in swiperList" :key="index">
 				<view class="swiper-item bg-red text-center " style="margin:0 auto;">
 					<view class="margin-top-xl">{{item.name}}</view>
@@ -10,110 +9,111 @@
 					<view>{{item.verifyDate}}</view>
 				</view>
 			</swiper-item>
-		</swiper>
-        <uni-card title="">
+		</swiper> -->
+		<uni-card title="" v-show="list.length < 1">
+			没有数据
+			</uni-card>
+		<uni-card title="" v-show="list.length > 0">
 
-            <view class="cu-list grid no-border col-3" style="width: 100%; " v-if="showA">
+			<view class="cu-list grid no-border col-3" style="width: 100%; " v-if="showA">
 				<view class="cu-item">
-				    <text>时间</text>
+					<text>时间</text>
 				</view>
-                <view class="cu-item">
-                    <text>详情</text>
-                </view>
-                <view class="cu-item">
-                    <text>审核状态</text>
-                </view>
-                
-            </view>
-            <view class="cu-list grid no-border col-3" style="width: 100%;word-break: break-all;margin-top: 0upx;padding: 0upx; " 
-            v-if="showA" v-for="(item,index) in list" :kye="index">
-                <view class="cu-item">
-                    <text>{{item.verifyDate}}</text>
-                </view>
-                <view class="cu-item">
-                    <text>{{item.name}}</text>
-                </view>
-                <view class="cu-item">
-                    <text>{{item.approveStatus}}</text>
-                </view>
-            </view>
-        </uni-card>
-    </view>
+				<view class="cu-item">
+					<text>详情</text>
+				</view>
+				<view class="cu-item">
+					<text>审核状态</text>
+				</view>
+			</view>
+			<view class="cu-list grid no-border col-3" style="width: 100%;word-break: break-all;margin-top: 0upx;padding: 0upx; "
+			 v-if="showA" v-for="(item,index) in list" :key="index">
+				<view class="cu-item">
+					<text>{{item.verifyDate}}</text>
+				</view>
+				<view class="cu-item">
+					<text>{{item.name}}</text>
+				</view>
+				<view class="cu-item">
+					<text>{{item.approveStatus}}</text>
+				</view>
+			</view>
+		</uni-card>
+	</view>
 </template>
 
 <script>
-    import uniCard from '@/components/uni-card/uni-card.vue';
-    export default {
-        components: {
-            uniCard,
-        },
-        data() {
-            const currentDate = this.getDate({
-                format: true
-            })
-            return {
-                showA: true,
-                date: currentDate,
-				list:[],
+	import uniCard from '@/components/uni-card/uni-card.vue';
+	export default {
+		components: {
+			uniCard,
+		},
+		data() {
+			const currentDate = this.getDate({
+				format: true
+			})
+			return {
+				showA: true,
+				date: currentDate,
+				list: [],
 				swiperList: [],
-            }
-        },
-        computed: {
-            startDate() {
-                return this.getDate('start');
-            },
-            endDate() {
-                return this.getDate('end');
-            }
-        },
-		onLoad(){
+			}
+		},
+		computed: {
+			startDate() {
+				return this.getDate('start');
+			},
+			endDate() {
+				return this.getDate('end');
+			}
+		},
+		onLoad() {
 			let page = this;
 			getApp().afterLogin(getCurrentPages(), function() {
 				page.member = uni.getStorageSync('member');
 				page.queryThisMoonData();
 			});
 		},
-        methods: {
+		methods: {
 			queryThisMoonData() {
 				let page = this;
-			
+				console.info(page.member)
 				getApp().request({
-					url: page.baseUrl() + '/salesman/historyReward',
+					url: page.baseUrl() + '/salesman/thisMoonReward',
 					data: {
 						salesmanId: page.member.id,
 						queryDateStr: page.date,
 					},
 					successParse: function(data) {
-						console.info('historyReward success !')
+						console.info('thisMoonReward success !')
 						console.info(data)
-						page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
+						// page.swiperList = data.filter(item => item.approveStatus === '审核拒绝')
 						page.list = data;
 					}
 				})
 			},
-            bindDateChange: function(e) {
-                console.log(e)
-                this.date = e.target.value
+			bindDateChange: function(e) {
+				console.log(e)
+				this.date = e.target.value
 				this.queryThisMoonData();
-            },
-            getDate(type) {
-                const date = new Date();
-                let year = date.getFullYear();
-                let month = date.getMonth() + 1;
-                let day = date.getDate();
+			},
+			getDate(type) {
+				const date = new Date();
+				let year = date.getFullYear();
+				let month = date.getMonth() + 1;
+				let day = date.getDate();
 
-                if (type === 'start') {
-                    year = year - 60;
-                } else if (type === 'end') {
-                    year = year + 2;
-                }
-                month = month > 9 ? month : '0' + month;;
-                day = day > 9 ? day : '0' + day;
-                // return `${year}-${month}-${day}`;
-                return `${year}-${month}`;
-            }
-        }
-    }
+				if (type === 'start') {
+					year = year - 60;
+				} else if (type === 'end') {
+					year = year + 2;
+				}
+				month = month > 9 ? month : '0' + month;;
+				day = day > 9 ? day : '0' + day;
+				return `${year}-${month}`;
+			}
+		}
+	}
 </script>
 
 <style>
