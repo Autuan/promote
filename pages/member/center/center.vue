@@ -95,7 +95,7 @@
 		</view>
 
 		<view class="cu-list menu  " style="width: 100%;">
-            <view class="cu-item " @tap="rankingDetail">
+            <view class="cu-item " >
             	<view class="content">
             		<text class="cuIcon-phone text-grey"></text>
             		<text class="text-grey">联系客服：139********</text>

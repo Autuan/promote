@@ -99,7 +99,7 @@
     	"borderStyle": "black",
     	"backgroundColor": "#fff",
     	"color": "#8F8F94",
-    	"selectedColor": "#ffff7f",
+    	"selectedColor": "#1afa29",
     	"list": [{
     			"pagePath": "pages/index/index",
     			"iconPath": "static/img/tab/home.png",

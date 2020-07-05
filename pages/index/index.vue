@@ -93,6 +93,7 @@
                          salesmanId:member.id,
                      },
 				     successParse: function(data) {
+						 console.info(data)
 				         // 文章轮播
 				         page.articles = data.articles;
 				         // 图片轮播
@@ -109,6 +110,7 @@
             calcuStatus(taskId){
                 let page = this;
                 let task = page.receivedList
+				.filter(item=>item.type !== 2)
                     .filter(item=>item.taskId===taskId)[0];
                 if(task) {
                     switch(task.status) {
@@ -165,6 +167,7 @@
 			qrCodeBtn(taskId){
                 let page = this;
                 let task = page.receivedList
+					.filter(item=>item.type !== 2)
                     .filter(item=>item.taskId===taskId)[0];
                 let status = 0 ;
                 if(task) {

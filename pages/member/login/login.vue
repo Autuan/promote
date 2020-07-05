@@ -3,11 +3,17 @@
         <!-- <view class="logo-view">
 			<image class="logo" src="/static/logo.jpg" mode="widthFix"></image>
 		</view> -->
-        <view class="content">
-            <view class="title-h">您好,欢迎使用,请登录</view>
+        <view class="">
+            <view class="title-h cu-form-group">您好,欢迎使用,请登录</view>
             <!-- <view class="introduce">欢迎使用</view> -->
-            <input class="margin-top" placeholder="请输入手机号码" v-model="submitData.mobile" />
-            <input class="margin-top" password placeholder="请输入登录密码" v-model="submitData.password" />
+			<view class="cu-form-group margin-top">
+				
+				<input class="margin-top line-black" placeholder="请输入手机号码" v-model="submitData.mobile" />
+			</view>
+			<view class="cu-form-group">
+				
+				<input class="margin-top" password placeholder="请输入登录密码" v-model="submitData.password" />
+			</view>
         </view>
         <view class="foot-view">
             <view class="zaiui-btn-view">
