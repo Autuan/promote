@@ -17,10 +17,10 @@
 			</view>
 			<view class="cu-list  bottom-border fL response border-bottom-gray padding-bottom" style="word-break: break-all;"
 			 v-if="showA" v-for="(item,index) in list" :key="index">
-				<!-- <view class="cu-item fL response ">
-                    <text class="fL">5月推广费</text>
-                    <text class="fR">+12.00</text>
-                </view> -->
+				<view class="cu-item fL response ">
+                    <text class="fL">推广费</text>
+                    <text class="fR">{{item.reward}}</text>
+                </view>
 				<view class="cu-item fL response ">
 					<text class="fL">收款银行卡</text>
 					<text class="fR">{{member.brokerageBankNo}}</text>

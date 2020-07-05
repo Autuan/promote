@@ -15,11 +15,11 @@
             </view>
 
             <view style="width: 100%; float:left">
-                <view class="fL text-xl" style="width: 50%;">拉新人数: 16 人</view>
-                <view class="fL text-xl" style="width: 50%;">推广费用: 400元</view>
+                <view class="fL text-xl" style="width: 50%;">拉新人数: {{promoteUserNum}} 人</view>
+                <view class="fL text-xl" style="width: 50%;">推广费用: {{promoteReward}}元</view>
             </view>
 
-            <view class="cu-list grid no-border col-3" style="width: 100%; " v-if="showA">
+            <view class="cu-list grid no-border col-3" style="width: 100%; " v-show="list.length > 0">
                 <view class="cu-item">
                     <text>交易时间</text>
                 </view>
@@ -32,15 +32,15 @@
                 
             </view>
             <view class="cu-list grid no-border col-3" style="width: 100%;word-break: break-all;margin-top: 0upx;padding: 0upx; " 
-            v-if="showA" v-for="i in 4" :kye="i">
+            v-show="list.length > 0" v-for="(item,index) in list" :key="index">
                 <view class="cu-item">
-                    <text>2020-06-08</text>
+                    <text>{{item.verifyDate}}</text>
                 </view>
                 <view class="cu-item" style="">
-                    <text style="">jdaaaaaa0001</text>
+                    <text style="">{{item.orderNo}}</text>
                 </view>
                 <view class="cu-item">
-                    <text>新手礼包:8.00</text>
+                    <text>{{item.reward}}</text>
                 </view>
                
               <!--  <view class="cu-item">
@@ -55,10 +55,7 @@
     import uniCard from '@/components/uni-card/uni-card.vue';
     export default {
         components: {
-            // listCell,
-            // uniGrid,
             uniCard,
-            // iPrice
         },
         data() {
             const currentDate = this.getDate({
@@ -66,7 +63,9 @@
             })
             return {
                 showA: true,
+                member: {},
                 date: currentDate,
+                list:[],
             }
         },
         computed: {
@@ -75,12 +74,43 @@
             },
             endDate() {
                 return this.getDate('end');
+            },
+            promoteReward(){
+                let reward = 0;
+                for(let data of this.list) {
+                    reward += data.reward*1;
+                }
+                return reward;
+            },
+            promoteUserNum(){
+                return this.list.length;
             }
         },
+        onLoad() {
+            let page = this;
+            getApp().afterLogin(getCurrentPages(), function() {
+                page.member = uni.getStorageSync('member');
+                page.jdList();
+            });
+        },
         methods: {
+            jdList() {
+                let page = this;
+                getApp().request({
+                    url: page.baseUrl() + '/data/jd/jdList',
+                    data: {
+                        salesmanId: page.member.id,
+                        queryDateStr: page.date,
+                    },
+                    successParse: function(data) {
+                        page.list = data;
+                    }
+                })
+            },
             bindDateChange: function(e) {
-                console.log(e)
-                this.date = e.target.value
+                // console.log(e)
+                this.date = e.target.value;
+                this.jdList();
             },
             getDate(type) {
                 const date = new Date();

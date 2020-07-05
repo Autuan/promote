@@ -1,6 +1,5 @@
 <template>
     <view>
-		<view class="bg-white text-center">联系客服：139********</view>
         <view class="cu-timeline">
             <view class="cu-item text-blue" v-for="(item,i) in list"  :key="i"
                 :class="i < 3 ? 'cuIcon-upstagefill':''"   :style="caluRankingStyle(i)" >

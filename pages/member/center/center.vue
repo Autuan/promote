@@ -95,15 +95,12 @@
 		</view>
 
 		<view class="cu-list menu  " style="width: 100%;">
-			<!-- <view class="cu-item arrow" @tap="dataDetail">
-		        <view class="content">
-		            <text class="cuIcon-circlefill text-grey"></text>
-		            <text class="text-grey">业绩数据</text>
-		        </view>
-		        <view class="action">
-		            <view class="cu-tag round bg-blue light">去看看</view>
-		        </view>
-		    </view> -->
+            <view class="cu-item " @tap="rankingDetail">
+            	<view class="content">
+            		<text class="cuIcon-phone text-grey"></text>
+            		<text class="text-grey">联系客服：139********</text>
+            	</view>
+            </view>
 			<view class="cu-item " @tap="logOut">
 				<view class="content">
 					<text class="cuIcon-footprint text-grey"></text>
@@ -112,7 +109,7 @@
 			</view>
 		</view>
 
-
+        <view style="width: 100%;height: 150upx;"></view>
 	</view>
 </template>
 
