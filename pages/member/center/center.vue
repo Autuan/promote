@@ -79,7 +79,7 @@
 		<view class="cu-list menu  " style="width: 100%;">
 			<view class="cu-item arrow" @tap="dataDetail">
 				<view class="content">
-					<text class="cuIcon-circlefill "></text>
+					<text class="cuIcon-calendar "></text>
 					<text class="">业绩数据</text>
 				</view>
 				<view class="action">
@@ -88,25 +88,26 @@
 			</view>
 			<view class="cu-item arrow" @tap="rankingDetail">
 				<view class="content">
-					<text class="cuIcon-circlefill "></text>
+					<text class="cuIcon-medal "></text>
 					<text class="">业绩排行榜</text>
+				</view>
+			</view>
+			<!-- <view class="cu-item " >
+				<view class="content">
+					<text class="cuIcon-phone "></text>
+					<text class="">联系客服：139********</text>
+				</view>
+			</view> -->
+			<view class="cu-item " @tap="logOut">
+				<view class="content">
+					<text class="cuIcon-exit "></text>
+					<text class="">退出登录</text>
 				</view>
 			</view>
 		</view>
 
 		<view class="cu-list menu  " style="width: 100%;">
-            <view class="cu-item " >
-            	<view class="content">
-            		<text class="cuIcon-phone "></text>
-            		<text class="">联系客服：139********</text>
-            	</view>
-            </view>
-			<view class="cu-item " @tap="logOut">
-				<view class="content">
-					<text class="cuIcon-footprint text-grey"></text>
-					<text class="text-grey">退出登录</text>
-				</view>
-			</view>
+            
 		</view>
 
         <view style="width: 100%;height: 150upx;"></view>
