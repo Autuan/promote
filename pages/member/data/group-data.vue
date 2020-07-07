@@ -142,8 +142,8 @@
 						// queryDateStr: page.date,
 					},
 					successParse: function(data) {
-						console.info('groupData list')
-						console.info(data);
+						// console.info('groupData list')
+						// console.info(data);
 						// 计算团队业绩
 						page.list = data;
 						// return;	

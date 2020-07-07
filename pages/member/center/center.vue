@@ -9,14 +9,14 @@
 					<view class="cu-item">
 						<view class="cu-avatar round lg" :style="'background-image:url('+member.headImg+');'" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
 						<view class="content flex-sub">
-							<view class="text-grey">
+							<view class="">
 								<text>{{member.name}}</text>
 								<view class="margin-left padding-xs">
 									<view class='cu-tag line-orange'>{{member.level}}</view>
 								</view>
 							</view>
 
-							<view class="text-gray text-sm flex justify-between">
+							<view class=" text-sm flex justify-between">
 								<text>{{member.mobile}}</text>
 							</view>
 						</view>
@@ -37,7 +37,7 @@
 		<view class="fL text-xxl response margin-top margin-left text-gray">
 			<view class="bg-red fL " style="width: 6px;height: 35upx;">
 			</view>
-			<view class="fL margin-left" style="line-height: 40upx;height: 40upx;">
+			<view class="fL margin-left text-black" style="line-height: 40upx;height: 40upx;">
 				历史推广费
 			</view>
 		</view>
@@ -47,7 +47,7 @@
 		<view class="fL text-xxl response margin-top margin-left text-gray">
 			<view class="bg-red fL " style="width: 6px;height: 35upx;">
 			</view>
-			<view class="fL margin-left" style="line-height: 40upx;height: 40upx;">
+			<view class="fL margin-left text-black" style="line-height: 40upx;height: 40upx;">
 				累计推广费
 			</view>
 		</view>
@@ -79,8 +79,8 @@
 		<view class="cu-list menu  " style="width: 100%;">
 			<view class="cu-item arrow" @tap="dataDetail">
 				<view class="content">
-					<text class="cuIcon-circlefill text-grey"></text>
-					<text class="text-grey">业绩数据</text>
+					<text class="cuIcon-circlefill "></text>
+					<text class="">业绩数据</text>
 				</view>
 				<view class="action">
 					<view class="cu-tag round bg-blue light">去看看</view>
@@ -88,8 +88,8 @@
 			</view>
 			<view class="cu-item arrow" @tap="rankingDetail">
 				<view class="content">
-					<text class="cuIcon-circlefill text-grey"></text>
-					<text class="text-grey">业绩排行榜</text>
+					<text class="cuIcon-circlefill "></text>
+					<text class="">业绩排行榜</text>
 				</view>
 			</view>
 		</view>
@@ -97,8 +97,8 @@
 		<view class="cu-list menu  " style="width: 100%;">
             <view class="cu-item " >
             	<view class="content">
-            		<text class="cuIcon-phone text-grey"></text>
-            		<text class="text-grey">联系客服：139********</text>
+            		<text class="cuIcon-phone "></text>
+            		<text class="">联系客服：139********</text>
             	</view>
             </view>
 			<view class="cu-item " @tap="logOut">
