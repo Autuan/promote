@@ -39,7 +39,7 @@
                         <text>{{item.name}}</text>
                     </view>
                     <view class="cu-item" style="">
-                        <text style="">{{item.orderNo}}</text>
+                        <text style="">{{encodeMember(item.orderNo)}}</text>
                     </view>
                     <view class="cu-item">
                         <text>{{item.approveStatus}}</text>
@@ -86,6 +86,13 @@
             });
         },
         methods: {
+			encodeMember(str){
+				if(str.length > 3) {
+					return str.substring(0,2)+'****'+str.substring(str.length -2 ,str.length)
+				} else {
+					return str.substring(0,1) + '****'
+				}
+			},
             bankList() {
                 let page = this;
                 getApp().request({

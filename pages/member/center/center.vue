@@ -27,7 +27,7 @@
 		
 
 		<view class="bg-red radius" style="height: 300upx;width: 92%;float: left;margin-top: 20px;" @tap="toThisMoonData">
-			<view class="fL text-xxl response margin-top margin-left">本月已发放推广费</view>
+			<view class="fL text-xxl response margin-top margin-left">本月预计推广费</view>
 			<i-price class="margin-top margin-left" countSize="48" symbolSize="0" decimal="2" :value="rewardCount.thisMoonReward"
 			 priceColor="white" />
 		</view>

@@ -37,7 +37,8 @@
                     <text>{{item.verifyDate}}</text>
                 </view>
                 <view class="cu-item" style="">
-                    <text style="">{{item.orderNo}}</text>
+                    <!-- <text style="">{{item.orderNo}}</text> -->
+                    <text style="">{{encodeMember(item.orderNo)}}</text>
                 </view>
                 <view class="cu-item">
                     <text>{{item.reward}}</text>
@@ -103,10 +104,19 @@
                         queryDateStr: page.date,
                     },
                     successParse: function(data) {
+						console.info('jd list');
+						console.info(data)
                         page.list = data;
                     }
                 })
             },
+			encodeMember(str){
+				if(str.length > 3) {
+					return str.substring(0,2)+'****'+str.substring(str.length -2 ,str.length)
+				} else {
+					return str.substring(0,1) + '****'
+				}
+			},
             bindDateChange: function(e) {
                 // console.log(e)
                 this.date = e.target.value;

@@ -10,6 +10,15 @@
 				</view>
 			</swiper-item>
 		</swiper> -->
+		
+		<view style="float: left;width: 100%;" v-if="historyList.length > 0">
+			<uni-card  v-for="(item,index) in historyList" style="float: left;height: 220upx;width: 33%;" 
+			 :class="index == 0 ? 'bg-color-red' : ''" mode="basic">
+					<view class="text-center " :class="index == 0 ? 'text-white' : ''">{{item.count}}</view>
+					<view class="text-center">推广服务费</view>
+					<view class="text-center " :class="index == 0 ? 'text-white' : ''">{{item.month}}</view>
+			</uni-card>
+			</view>
 		<uni-card title="" v-show="list.length < 1">
 			没有数据
 			</uni-card>
@@ -57,6 +66,7 @@
 				date: currentDate,
 				list: [],
 				swiperList: [],
+				historyList: [],
 			}
 		},
 		computed: {
@@ -72,9 +82,26 @@
 			getApp().afterLogin(getCurrentPages(), function() {
 				page.member = uni.getStorageSync('member');
 				page.queryThisMoonData();
+				page.queryHistoryData();
 			});
 		},
 		methods: {
+			queryHistoryData() {
+				let page = this;
+			
+				getApp().request({
+					url: page.baseUrl() + '/salesman/historyReward',
+					data: {
+						salesmanId: page.member.id,
+						queryDateStr: page.date,
+					},
+					successParse: function(data) {
+						console.info('historyReward success !')
+						console.info(data)
+						page.historyList = data;
+					}
+				})
+			},
 			queryThisMoonData() {
 				let page = this;
 				console.info(page.member)
@@ -87,7 +114,8 @@
 					successParse: function(data) {
 						console.info('thisMoonReward success !')
 						console.info(data)
-						// page.swiperList = data.filter(item => item.approveStatus === '审核拒绝')
+						page.swiperList = data.filter(item => item.approveStatus !== '审核拒绝');
+						page.swiperList=page.swiperList.slice(3);
 						page.list = data;
 					}
 				})
@@ -117,5 +145,8 @@
 </script>
 
 <style>
-
+.bg-color-red {
+	background-color: #e54d42;
+	color: #ffffff;
+}
 </style>
