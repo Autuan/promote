@@ -42,7 +42,7 @@
                         <text style="">{{encodeMember(item.orderNo)}}</text>
                     </view>
                     <view class="cu-item">
-                        <text>{{item.approveStatus}}</text>
+                        <text :class="item.approveStatus == '审核通过' ? 'text-green-cus' : 'text-red-cus'">{{item.approveStatus}}</text>
                     </view>
                     <view class="cu-item">
                         <text>{{item.verifyDate}}</text>
@@ -102,9 +102,7 @@
                         queryDateStr: page.date,
                     },
                     successParse: function(data) {
-                        console.info('bank list')
-                        console.info(data);
-
+						console.info(data)
                         page.list = data;
                     }
                 })
@@ -133,5 +131,10 @@
 </script>
 
 <style>
-
+.text-green-cus{
+	color: #39b54a !important;
+}
+.text-red-cus{
+	    color: #e54d42 !important;
+}
 </style>

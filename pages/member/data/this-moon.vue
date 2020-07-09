@@ -13,10 +13,11 @@
 		
 		<view style="float: left;width: 100%;" v-if="historyList.length > 0">
 			<uni-card  v-for="(item,index) in historyList" style="float: left;height: 220upx;width: 33%;" 
-			 :class="index == 0 ? 'bg-color-red' : ''" mode="basic">
-					<view class="text-center " :class="index == 0 ? 'text-white' : ''">{{item.count}}</view>
+			 :class="index == tapIndex ? 'bg-color-red' : ''" mode="basic" :key="index"
+			 @tap="queryOtherMoonData(item.month,index)">
+					<view class="text-center " :class="index == tapIndex ? 'text-white' : ''">{{item.count}}</view>
 					<view class="text-center">推广服务费</view>
-					<view class="text-center " :class="index == 0 ? 'text-white' : ''">{{item.month}}</view>
+					<view class="text-center " :class="index == tapIndex ? 'text-white' : ''">{{item.month}}</view>
 			</uni-card>
 			</view>
 		<uni-card title="" v-show="list.length < 1">
@@ -24,7 +25,7 @@
 			</uni-card>
 		<uni-card title="" v-show="list.length > 0">
 
-			<view class="cu-list grid no-border col-3" style="width: 100%; " v-if="showA">
+			<view class="cu-list grid no-border col-3" style="width: 100%; ">
 				<view class="cu-item">
 					<text>时间</text>
 				</view>
@@ -36,15 +37,15 @@
 				</view>
 			</view>
 			<view class="cu-list grid no-border col-3" style="width: 100%;word-break: break-all;margin-top: 0upx;padding: 0upx; "
-			 v-if="showA" v-for="(item,index) in list" :key="index">
+			  v-for="(item,index) in list" :key="index">
 				<view class="cu-item">
 					<text>{{item.verifyDate}}</text>
 				</view>
 				<view class="cu-item">
-					<text>{{item.name}}</text>
+					<text class="">{{item.name}}</text>
 				</view>
 				<view class="cu-item">
-					<text>{{item.approveStatus}}</text>
+					<text :class="item.approveStatus == '通过' ? 'text-green-cus' : 'text-red-cus'">{{item.approveStatus}}</text>
 				</view>
 			</view>
 		</uni-card>
@@ -62,7 +63,7 @@
 				format: true
 			})
 			return {
-				showA: true,
+				tapIndex: 0,
 				date: currentDate,
 				list: [],
 				swiperList: [],
@@ -86,6 +87,16 @@
 			});
 		},
 		methods: {
+			queryOtherMoonData(dateStr,index){
+				let page = this;
+				if(index == page.tapIndex) {
+					return;
+				}
+				page.tapIndex = index;
+				page.date = dateStr;
+				
+				page.queryThisMoonData();
+			},
 			queryHistoryData() {
 				let page = this;
 			
@@ -110,10 +121,7 @@
 						queryDateStr: page.date,
 					},
 					successParse: function(data) {
-						console.info('thisMoonReward success !')
 						console.info(data)
-						page.swiperList = data.filter(item => item.approveStatus !== '审核拒绝');
-						page.swiperList=page.swiperList.slice(3);
 						page.list = data;
 					}
 				})
@@ -146,5 +154,11 @@
 .bg-color-red {
 	background-color: #e54d42;
 	color: #ffffff;
+}
+.text-green-cus{
+	color: #39b54a !important;
+}
+.text-red-cus{
+	    color: #e54d42 !important;
 }
 </style>

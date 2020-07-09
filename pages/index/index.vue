@@ -2,7 +2,7 @@
 	<view class="content2">
 
 		<swiper class="screen-swiper square-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-		 duration="500">
+		 duration="500" style="width: 100%;height: 300upx;">
 			<swiper-item v-for="(item,index) in articles" :key="index" @tap="toArticleDetail(item.id)">
 				<image :src="item.image" mode="aspectFill"></image>
 			</swiper-item>
@@ -10,36 +10,27 @@
 
 
 
-		<view class="cu-bar bg-white .margin-top-one">
-			<view class="action">
+		<view class="cu-bar bg-white " >
+			<view class="action" >
 				<text class="cuIcon-title text-pink"></text> 倾力推荐
 			</view>
 		</view>
 
 		<swiper class=" round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-		 duration="500" @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff" style="width: 100%;height: 350upx;">
+		 duration="500" @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff" style="width: 100%;height: 330upx;">
 
 			<swiper-item v-for="(item,index) in images" :key="index" @tap="previewImg(item.image)">
 				<image :src="item.image" style="width: 100%;height: 350upx;"></image>
 			</swiper-item>
 		</swiper>
 
-		<!-- <swiper class="card-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-            duration="500" @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
-            <swiper-item v-for="(item,index) in images" :key="index" :class="cardCur==index?'cur':''"  @tap="previewImg(item.image)">
-                <view class="swiper-item">
-                    <image :src="item.image" mode="aspectFit"></image>
-                </view>
-            </swiper-item>
-        </swiper> -->
-
-		<view class="cu-bar bg-white margin-top">
+		<view class="cu-bar bg-white margin-top-one ">
 			<view class="action">
-				<text class="cuIcon-title text-blue"></text> 业务专区
+				<text class="cuIcon-title text-blue  "></text> 业务专区
 			</view>
 		</view>
 
-		<view class="bg-white radius shadow margin-top-one fL" style="width: 90%;margin-left: 5%;height: 310upx;" v-for="task in tasks" :key="task.id">
+		<view class="bg-white radius shadow margin-top-one fL" style="width: 90%;margin-left: 5%;height: 300upx;" v-for="task in tasks" :key="task.id">
 			<view class="fL response" @tap="toArticleDetail(task.articleId)">
 				<view class=" text-cut text-bold margin-top-one margin-bottom-sm" style="margin-left: 5%;">{{task.name}}</view>
 			</view>

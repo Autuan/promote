@@ -41,12 +41,9 @@
                     <text style="">{{encodeMember(item.orderNo)}}</text>
                 </view>
                 <view class="cu-item">
-                    <text>{{item.reward}}</text>
+                    <text>{{item.type}}{{item.reward}}</text>
                 </view>
                
-              <!--  <view class="cu-item">
-                    <text>2020-06-08</text>
-                </view> -->
             </view>
         </uni-card>
     </view>
@@ -104,7 +101,6 @@
                         queryDateStr: page.date,
                     },
                     successParse: function(data) {
-						console.info('jd list');
 						console.info(data)
                         page.list = data;
                     }
@@ -118,7 +114,6 @@
 				}
 			},
             bindDateChange: function(e) {
-                // console.log(e)
                 this.date = e.target.value;
                 this.jdList();
             },
