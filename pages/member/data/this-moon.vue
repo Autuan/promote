@@ -96,8 +96,6 @@
 						queryDateStr: page.date,
 					},
 					successParse: function(data) {
-						console.info('historyReward success !')
-						console.info(data)
 						page.historyList = data;
 					}
 				})
