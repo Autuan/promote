@@ -60,52 +60,6 @@
         },
         data() {
             return {
-                list2: [
-                    {
-                        id: '1',
-                        name: '总业绩',
-                        recorder: [
-                            {
-                            id: '11',
-                            date: '2020-06',
-                            totalMoney: 10000,
-                            newProxy: 3,
-                            newActiveTerminal: 2,
-                        },{
-                            id: '12',
-                            date: '2020-05',
-                            totalMoney: 400,
-                            newProxy: 2,
-                            newActiveTerminal: 23,
-                        } , ]
-                    },
-                    {
-                        id: '2',
-                        name: '张三',
-                        recorder: [{
-                            id: '21',
-                            date: '2020-06',
-                            totalMoney: 5000,
-                            newProxy: 8,
-                            newActiveTerminal: 26,
-                        }, {
-                            id: '22',
-                            date: '2020-05',
-                            
-							totalMoney: 4000,
-                            newProxy: 15,
-                            newActiveTerminal: 24,
-                        },
-                         {
-                             id: '23',
-                             date: '2020-04',
-                             totalMoney: 32,
-                             newProxy: 13,
-                             newActiveTerminal: 21,
-                         },
-                         ]
-                    },
-                ],
                 list: [],
                 tabCur: 0,
                 mainCur: 0,
@@ -139,11 +93,9 @@
 					url: page.baseUrl() + '/group/groupData',
 					data: {
 						groupId: page.member.groupId,
-						// queryDateStr: page.date,
+						querySalesmanId: page.member.id,
 					},
 					successParse: function(data) {
-						// console.info('groupData list')
-						// console.info(data);
 						// 计算团队业绩
 						page.list = data;
 						// return;	
@@ -156,7 +108,6 @@
 							}
 							groupDetail.push(obj);
 						}
-						// let groupDetail = data[0].detail;
 						
 						for(let item of groupDetail) {
 							// item.id;
@@ -178,9 +129,6 @@
 						};
 						let list =[groupAccount]
 						list = list.concat(data);
-						console.info('groupDetail')
-						console.info(groupDetail)
-						console.info(list)
 						page.list = list;
 						// for(let each of data) {
 						// 	// let sum = 0;
