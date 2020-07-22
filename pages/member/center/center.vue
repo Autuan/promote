@@ -92,12 +92,12 @@
 					<text class="">业绩排行榜</text>
 				</view>
 			</view>
-			<!-- <view class="cu-item " >
-				<view class="content">
-					<text class="cuIcon-phone "></text>
-					<text class="">联系客服：139********</text>
+			<view class="cu-item arrow" @tap="toChangePwd">
+				<view class="content ">
+					<text class="cuIcon-edit "></text>
+					<text class="">修改密码</text>
 				</view>
-			</view> -->
+			</view>
 			<view class="cu-item " @tap="logOut">
 				<view class="content">
 					<text class="cuIcon-exit "></text>
@@ -130,39 +130,6 @@
 				rewardCount: {},
 				title: 'Hello',
 				bigIdx: 1,
-				vips: [{
-					bg: 'linear-gradient(94deg,rgba(150,147,168,1),rgba(150,147,164,1))',
-					shadow: '0px 3px 12px 0px rgba(195,164,110,0.23)',
-					title: 'VIP会员',
-					subTitle: '距离下一等级还差888积分'
-				}, {
-					old_bg: 'linear-gradient(94deg,rgba(150,147,168,1),rgba(150,147,164,1))',
-					bg: 'linear-gradient(94deg,rgba(192,160,105,1),rgba(233,213,172,1))',
-					shadow: '0px 3px 12px 0px rgba(195,164,110,0.23)',
-					title: 'VIP会员',
-					subTitle: '距离下一等级还差888积分'
-				}, {
-					bg: 'linear-gradient(94deg,rgba(150,147,168,1),rgba(150,147,164,1))',
-					shadow: '0px 3px 12px 0px rgba(195,164,110,0.23)',
-					title: 'VIP会员',
-					subTitle: '距离下一等级还差888积分'
-				}],
-				tasks: [{
-						icon: '/static/icon_signin.png',
-						name: '连续7天签到',
-						desc: '连续签到获得7积分奖励'
-					},
-					{
-						icon: '/static/icon_profile.png',
-						name: '完善个人信息',
-						desc: '完善信息获得7积分奖励'
-					},
-					{
-						icon: '/static/icon_friend.png',
-						name: '邀请好友参加',
-						desc: '邀请好友获得7积分奖励'
-					}
-				],
 
 			}
 		},
@@ -179,8 +146,6 @@
 						salesmanId: member.id
 					},
 					successParse: function(data) {
-						console.info('calcuReward success !')
-						console.info(data)
 						page.rewardCount = data;
 					}
 				})
@@ -194,6 +159,11 @@
 			dataDetail() {
 				uni.navigateTo({
 					url: '/pages/member/data/data'
+				})
+			},
+			toChangePwd(){
+				uni.navigateTo({
+					url:'/pages/member/login/change-pwd'
 				})
 			},
 			rankingDetail() {

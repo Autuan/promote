@@ -33,7 +33,7 @@
 					<text>详情</text>
 				</view>
 				<view class="cu-item">
-					<text>审核状态</text>
+					<text>费用</text>
 				</view>
 			</view>
 			<view class="cu-list grid no-border col-3" style="width: 100%;word-break: break-all;margin-top: 0upx;padding: 0upx; "
@@ -46,7 +46,7 @@
 					<text class="">{{item.info}}</text>
 				</view>
 				<view class="cu-item margin-top">
-					<text :class="item.approveStatus == '通过' ? 'text-green-cus' : 'text-red-cus'">{{item.approveStatus}}</text>
+					<text class="">{{item.reward}}</text>
 				</view>
 			</view>
 		</uni-card>
@@ -83,7 +83,7 @@
 			let page = this;
 			getApp().afterLogin(getCurrentPages(), function() {
 				page.member = uni.getStorageSync('member');
-				console.info(page.member)
+				// console.info(page.member)
 				page.queryThisMoonData();
 				page.queryHistoryData();
 			});
@@ -123,7 +123,6 @@
 						queryDateStr: page.date,
 					},
 					successParse: function(data) {
-						// console.info(data)
 						page.list = data;
 					}
 				})

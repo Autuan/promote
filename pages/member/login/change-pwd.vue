@@ -56,11 +56,13 @@
         methods: {
             checkParam() {
                 let tipObj = {
+					password: {
+					    name: '密码',
+						minLen:6,
+					},
                     repeatPwd: {
                         name: '确认密码',
-                    },
-                    password: {
-                        name: '密码',
+						minLen:6,
                     },
                 };
                 return getApp().checkParamNotNull(this.submitData, tipObj);
@@ -73,11 +75,11 @@
                     return;
                 }
                 if (page.submitData.password !== page.submitData.repeatPwd) {
-                    getApp().tip('两次密码不一致!')
+                    getApp().tip('两次密码不一致')
                     return;
                 }
                 if (page.submitData.password === '123456') {
-                    getApp().tip('密码过于简单!')
+                    getApp().tip('密码过于简单')
                     return;
                 }
                 let encode = md5(page.submitData.password);
@@ -89,7 +91,6 @@
                     url: page.baseUrl() + '/salesman/updatePwd',
                     data: page.submitData,
                     successParse: function(data) {
-                        console.info('update Pwd success !')
                         uni.switchTab({
                             url:'/pages/index/index'
                         })

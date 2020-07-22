@@ -19,7 +19,7 @@
             <view class="zaiui-btn-view">
                 <button class="zaiui-btn" @tap="login">登录</button>
             </view>
-            <view class="font-tag-view">
+            <view class="font-tag-view" v-if="false">
                 <!-- <text class="font-tag">忘记密码?</text> -->
                 <text class="font-tag" @tap="toRegister">用户注册</text>
             </view>
