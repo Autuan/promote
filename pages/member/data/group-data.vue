@@ -12,7 +12,27 @@
 				<image :src="'https://ossweb-img.qq.com/images/lol/web201310/skin/big3900'+index+ '.jpg'" mode="aspectFill"></image>
 			</swiper-item>
 		</swiper> -->
-        <view class="VerticalBox">
+        <view style="width: 100%;float:right; ">
+        	<view class="fL text-center " style="width: 40%;">
+        		<picker mode="date" :value="dateStart" :start="startDate" :end="endDate" @change="bindDateChangeStart" fields="month">
+        			<view class="text-xl">
+        				<text>{{dateStart}}</text>
+        				<text class="margin-left cuIcon-unfold" />
+        			</view>
+        		</picker>
+        	</view>
+            <view class="fL text-xl text-center" style="width: 20%;"> 至</view>
+            <view class="fL text-center" style="width: 40%;">
+            	<picker mode="date" :value="dateEnd" :start="startDate" :end="endDate" @change="bindDateChangeEnd" fields="month">
+            		<view class="text-xl">
+            			<text>{{dateEnd}}</text>
+            			<text class="margin-left cuIcon-unfold" />
+            		</view>
+            	</picker>
+            </view>
+        </view>
+        
+        <view class="VerticalBox fL response">
             <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 375upx)">
                 <view class="cu-item" :class="index==tabCur?'text-green cur':''" v-for="(item,index) in list" :key="index"
                     @tap="TabSelect" :data-id="index">
@@ -59,13 +79,27 @@
             iPrice
         },
         data() {
+            const currentDate = this.getDate({
+            	format: true
+            })
             return {
                 list: [],
+                dateStart: currentDate,
+                dateEnd: currentDate,
+                date: currentDate,
                 tabCur: 0,
                 mainCur: 0,
                 verticalNavTop: 0,
                 load: true
             };
+        },
+        computed: {
+        	startDate() {
+        		return this.getDate('start');
+        	},
+        	endDate() {
+        		return this.getDate('end');
+        	}
         },
         onLoad() {
 			let page = this;
@@ -87,18 +121,37 @@
             uni.hideLoading()
         },
         methods: {
+            bindDateChangeStart: function(e) {
+            	this.dateStart = e.target.value;
+            	this.groupData();
+            },
+            bindDateChangeEnd: function(e) {
+            	this.dateEnd = e.target.value;
+            	this.groupData();
+            },
 			groupData() {
+                uni.showLoading({
+                    title: '加载中...',
+                    mask: true
+                });
 				let page = this;
+                console.info(page.dateEnd)
+                if(page.dateStart > page.dateEnd) {
+                    getApp().tip('开始时间不能晚于结束时间')
+                    return;
+                }
 				getApp().request({
 					url: page.baseUrl() + '/group/groupData',
 					data: {
 						groupId: page.member.groupId,
 						querySalesmanId: page.member.id,
+						dateStart: page.dateStart,
+						dateEnd: page.dateEnd,
+                        
 					},
 					successParse: function(data) {
 						// 计算团队业绩
 						page.list = data;
-						// return;	
 						let groupDetail = [];
 						for(let item of data[0].detail) {
 							let obj = {
@@ -114,8 +167,6 @@
 							item.count = 0;
 							for(let each of data) {
 								for(let record of each.detail) {
-									
-									
 										if(record.id === item.id) {
 											item.count += record.count;
 										}
@@ -139,6 +190,7 @@
 						// }
 						// page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
 						// page.list = data;
+                        uni.hideLoading();
 					}
 				})
 			},
@@ -175,7 +227,22 @@
                         return false
                     }
                 }
-            }
+            },
+        getDate(type) {
+        	const date = new Date();
+        	let year = date.getFullYear();
+        	let month = date.getMonth() + 1;
+        	let day = date.getDate();
+        
+        	if (type === 'start') {
+        		year = year - 60;
+        	} else if (type === 'end') {
+        		year = year + 2;
+        	}
+        	month = month > 9 ? month : '0' + month;;
+        	day = day > 9 ? day : '0' + day;
+        	return `${year}-${month}`;
+        }
         },
     }
 </script>
