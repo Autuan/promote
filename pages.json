@@ -94,6 +94,46 @@
                 }
             }
         }
+        ,{
+            "path" : "pages/member/redpack/code/category",
+           "style": {
+           	"navigationBarTitleText": "红包码业务"
+           }
+        }
+		,{
+		    "path" : "pages/member/redpack/code/input",
+		   "style": {
+		   	"navigationBarTitleText": "红包码信息录入"
+		   }
+		}
+		,{
+		    "path" : "pages/member/redpack/code/history-input",
+		   "style": {
+		   	"navigationBarTitleText": "历史提交记录"
+		   }
+		}
+		,{
+		    "path" : "pages/member/redpack/code/query",
+		   "style": {
+		   	"navigationBarTitleText": "红包码业绩查询"
+		   }
+		}
+		,{
+		    "path" : "pages/member/redpack/code/query-achievement",
+		   "style": {
+		   	"navigationBarTitleText": "业绩数据"
+		   }
+		}
+		,{
+		    "path" : "pages/member/redpack/code/query-achievement-detail",
+		   "style": {
+		   	"navigationBarTitleText": "团队业绩"
+		   }
+		}
+        ,{
+            "path" : "pages/member/redpack/code/query-group",
+            "style" : {}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

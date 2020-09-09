@@ -77,6 +77,12 @@
 		<view class="margin-top margin-bottom"></view>
 
 		<view class="cu-list menu  " style="width: 100%;">
+			<view class="cu-item arrow" @tap="rankingDetail">
+				<view class="content">
+					<text class="cuIcon-redpacket "></text>
+					<text class="">红包码业务</text>
+				</view>
+			</view>
 			<view class="cu-item arrow" @tap="dataDetail">
 				<view class="content">
 					<text class="cuIcon-calendar "></text>

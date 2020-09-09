@@ -122,7 +122,6 @@
 						salesmanId: member.id,
 					},
 					successParse: function(data) {
-						console.info(data)
 						// 文章轮播
 						page.articles = data.articles;
 						// 图片轮播
@@ -182,7 +181,6 @@
 					url: page.baseUrl() + '/task/receive',
 					data: {
 						taskId: taskId,
-						// taskId:task.id,
 						salesmanId: page.member.id,
 					},
 					successParse: function(data) {
@@ -191,7 +189,6 @@
 						} else {
 							page.receivedList.push({
 								taskId: taskId,
-								// taskId:task.id,
 								status: 1,
 							})
 						}
@@ -212,14 +209,6 @@
 					case 0:
 						{
 							page.applyTask(taskId, task);
-							// if(task) {
-							//     task.status = 1;
-							// }else {
-							//     page.receivedList.push({
-							//         taskId:taskId,
-							//         status:1,
-							//     })
-							// }
 							break;
 						}
 						// 已申请
@@ -245,9 +234,6 @@
 
 				}
 				return;
-
-
-
 			}
 		}
 	}
