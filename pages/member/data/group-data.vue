@@ -1,17 +1,5 @@
 <template>
     <view>
-        <!-- <view class="fixed">
-			<cu-custom :isBack="true" bgColor="bg-shadeTop text-white">
-				<block slot="backText">返回</block>
-				<block slot="content">垂直导航</block>
-			</cu-custom>
-		</view> -->
-        <!-- <swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
-		 duration="500">
-			<swiper-item v-for="(item,index) in 4" :key="index">
-				<image :src="'https://ossweb-img.qq.com/images/lol/web201310/skin/big3900'+index+ '.jpg'" mode="aspectFill"></image>
-			</swiper-item>
-		</swiper> -->
         <view style="width: 100%;float:right; ">
         	<view class="fL text-center " style="width: 40%;">
         		<picker mode="date" :value="dateStart" :start="startDate" :end="endDate" @change="bindDateChangeStart" fields="month">
@@ -55,14 +43,6 @@
                             <i-price style="width: 60%;" class="margin-right text-right" countSize="14" symbolSize="14"
                                 :value="recorder.count" />
                         </view>
-                        <!-- <view class="cu-item" style="width: 100%;">
-                            <view class="margin-left-xl text-left" style="width: 40%;">新增激活终端</view>
-                            <view class="margin-right-xl text-right" style="width: 60%;">{{recorder.newActiveTerminal}}台</view>
-                        </view>
-                        <view class="cu-item" style="width: 100%;">
-                            <view class="margin-left-xl text-left" style="width: 40%;">新增代理</view>
-                            <view class="margin-right-xl text-right" style="width: 60%;">{{recorder.newProxy}}人</view>
-                        </view> -->
                     </view>
                     </view>
                 </view>
@@ -105,9 +85,6 @@
 			let page = this;
 			getApp().afterLogin(getCurrentPages(), function() {
 				page.member = uni.getStorageSync('member');
-				console.info(page.member)
-				// console.info(page.member.groupId)
-				// return;
 				page.groupData();
 				
             uni.showLoading({
@@ -163,7 +140,6 @@
 						}
 						
 						for(let item of groupDetail) {
-							// item.id;
 							item.count = 0;
 							for(let each of data) {
 								for(let record of each.detail) {
@@ -181,15 +157,7 @@
 						let list =[groupAccount]
 						list = list.concat(data);
 						page.list = list;
-						// for(let each of data) {
-						// 	// let sum = 0;
-						// 	for(let item of each.detail) {
-						// 		item[groopDetail]
-						// 		sum+=
-						// 	}
-						// }
-						// page.swiperList = data.filter(item=>item.approveStatus === '审核拒绝')
-						// page.list = data;
+						
                         uni.hideLoading();
 					}
 				})

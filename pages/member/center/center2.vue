@@ -16,11 +16,6 @@
                             
         					<view class="text-gray text-sm flex justify-between">
         						<text>16688888888</text>
-        						<!-- <view class="text-gray text-sm">
-        							<text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-        							<text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-        							<text class="cuIcon-messagefill margin-lr-xs"></text> 30
-        						</view> -->
         					</view>
         				</view>
         			</view>
@@ -60,15 +55,10 @@
     </view>
 </template>
 <script>
-    // let startY = 0,
-    //     moveY = 0,
-    //     pageAtTop = true;
          import uniCard from '@/components/uni-card/uni-card.vue';
          import iPrice from '@/components/i-price/i-price.vue';
     export default {
         components: {
-            // listCell,
-            // uniGrid,
             uniCard,
             iPrice
         },
@@ -83,16 +73,8 @@
 		},
         onLoad(option) {
             let memberNo = uni.getStorageSync('memberNo');
-            // if(memberNo == undefined || memberNo == '') {
-            //     option.redirectUrl = '/pages/member/center';
-            //    uni.reLaunch({
-            //        url: getApp().objToUrl('/pages/member/log-in',option),
-            //    });
-            // } else {
-            // }
         },
         computed: {
-            // ...mapState(['hasLogin', 'userInfo'])
         },
         methods: {
             /**
@@ -153,7 +135,6 @@
                 uni.navigateTo({
                 	url:'/pages/member/account'
                 })
-                // getApp().tip('账户信息');
             },
             address() {
 				uni.navigateTo({

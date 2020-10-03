@@ -1,16 +1,5 @@
 <template>
 	<view>
-		<!-- <swiper class="card-swiper" :indicator-dots="false" :circular="true" :autoplay="false" interval="5000" duration="500"
-		 @change="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
-			<swiper-item v-for="(item,index) in swiperList" :key="index">
-				<view class="swiper-item bg-red text-center " style="margin:0 auto;">
-					<view class="margin-top-xl">{{item.name}}</view>
-					<view>{{item.approveStatus}}</view>
-					<view>{{item.verifyDate}}</view>
-				</view>
-			</swiper-item>
-		</swiper> -->
-		
 		<view style="float: left;width: 100%;" v-if="historyList.length > 0">
 			<uni-card  v-for="(item,index) in historyList" style="float: left;height: 220upx;width: 33%;" 
 			 :class="index == tapIndex ? 'bg-color-red' : ''" mode="basic" :key="index"
@@ -83,7 +72,6 @@
 			let page = this;
 			getApp().afterLogin(getCurrentPages(), function() {
 				page.member = uni.getStorageSync('member');
-				// console.info(page.member)
 				page.queryThisMoonData();
 				page.queryHistoryData();
 			});

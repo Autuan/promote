@@ -1,17 +1,6 @@
 <template>
 	<view>
 		<uni-card title="">
-			<!-- <view style="width: 100%;float:right; ">
-				<view class="fR margin-right-xl">
-					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange" fields="month">
-						<view class="text-xl">
-							<text>{{date}}</text>
-							<text class="margin-left cuIcon-unfold" />
-						</view>
-					</picker>
-				</view>
-			</view> -->
-
 			<view v-show="list.length < 1">
 				没有数据
 			</view>

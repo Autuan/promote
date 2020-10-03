@@ -36,9 +36,6 @@
 </script>
 
 <style>
-	/* @import "../../common/css/proxy/recharge.css"; */
-	/* @import "../../common/css/proxy/style.css"; */
-
 	.top_n {
 		z-index: 99999;
 	}

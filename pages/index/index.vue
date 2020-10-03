@@ -8,8 +8,6 @@
 			</swiper-item>
 		</swiper>
 
-
-
 		<view class="cu-bar bg-white " >
 			<view class="action" >
 				<text class="cuIcon-title text-pink"></text> 倾力推荐
@@ -45,7 +43,6 @@
 					
 					<view class="fL response margin-top-sm " @tap="toArticleDetail(task.articleId)"><text class="text-gray">{{task.summary}}</text></view>
 
-
 					<view class="fL response margin-top-sm ">
 						<button class="cu-btn line-orange" @tap="qrCodeBtn(task.id)">{{calcuStatus(task.id)}}</button>
 						<button class="cu-btn bg-gray margin-left-sm" @tap="toArticleDetail(task.articleId)">
@@ -71,7 +68,6 @@
 						</view>
 						<view class="response" @tap="toArticleDetail(task.articleId)"><text class="text-gray">{{task.summary}}</text></view>
 						<view class="text-content ">
-							<!-- <text>&nbsp;</text> -->
 							<button class="cu-btn line-orange" @tap="qrCodeBtn(task.id)">{{calcuStatus(task.id)}}</button>
 							<button class="cu-btn bg-gray margin-left-sm" @tap="toArticleDetail(task.articleId)">
 								{{null != task.reward ? '推广赚'+task.reward+'元':'推广赚收益'}}
@@ -82,8 +78,6 @@
 					</view>
 				</view>
 			</view>
-
-
 		</view>
 		
 		<view class="response fL" style="height: 150upx;"></view>
@@ -176,7 +170,6 @@
 			},
 			applyTask(taskId, task) {
 				let page = this;
-				// return;
 				getApp().request({
 					url: page.baseUrl() + '/task/receive',
 					data: {

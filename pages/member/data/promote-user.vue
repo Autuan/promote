@@ -1,6 +1,5 @@
 <template>
     <view>
-
         <uni-card title="联合拉新">
             <view style="width: 100%;float:right; ">
                 <view class="fR margin-right-xl">
@@ -37,7 +36,6 @@
                     <text>{{item.verifyDate}}</text>
                 </view>
                 <view class="cu-item" style="">
-                    <!-- <text style="">{{item.orderNo}}</text> -->
                     <text style="">{{encodeMember(item.orderNo)}}</text>
                 </view>
                 <view class="cu-item">
@@ -101,7 +99,6 @@
                         queryDateStr: page.date,
                     },
                     successParse: function(data) {
-						console.info(data)
                         page.list = data;
                     }
                 })
@@ -130,7 +127,6 @@
                 }
                 month = month > 9 ? month : '0' + month;;
                 day = day > 9 ? day : '0' + day;
-                // return `${year}-${month}-${day}`;
                 return `${year}-${month}`;
             }
         }

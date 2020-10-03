@@ -125,8 +125,6 @@
 	import iPrice from '@/components/i-price/i-price.vue';
 	export default {
 		components: {
-			// listCell,
-			// uniGrid,
 			uniCard,
 			iPrice
 		},
@@ -290,8 +288,6 @@
 		.small {
 			margin-top: 14px;
 			height: 75%;
-
-			// transition: all 0.3s;
 			.img {
 				margin-top: 5px;
 				width: 25px;

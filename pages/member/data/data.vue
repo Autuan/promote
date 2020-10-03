@@ -88,7 +88,6 @@
 						queryDateStr: page.date,
 					},
 					successParse: function(data) {
-
 						page.failNum = data.filter(item => item.approveStatus === '审核拒绝').length;
 						page.passNum = data.filter(item => item.approveStatus === '审核通过').length;
 					}
